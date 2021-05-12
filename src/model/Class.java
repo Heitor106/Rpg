@@ -137,7 +137,7 @@ public class Class extends Raca {
 		this.itens = itens;
 	}
 
-	private void setClass(String clase) {
+	public void setClass(String clase) {
 
 		switch (clase) {
 
@@ -158,6 +158,26 @@ public class Class extends Raca {
 
 		case ClassConstantes.CLERIGO:
 			clerigo();
+
+			break;
+			
+		case ClassConstantes.DRUIDA:
+			Druida();
+
+			break;
+			
+		case "urso":
+			Urso();
+
+			break;
+			
+		case "jaguar":
+			jaguar();
+
+			break;
+			
+		case "coelho":
+			coelho();
 
 			break;
 
@@ -186,8 +206,6 @@ public class Class extends Raca {
 		nomeDaClasse = ClassConstantes.BARBARO;
 
 		hp = super.getHp() + DadosConstantes.D12 + getConMod();
-		;
-
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.WIS;
 
@@ -286,7 +304,7 @@ public class Class extends Raca {
 		nomeDaClasse = ClassConstantes.CLERIGO;
 
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
-		Nmagias = 5;
+		Nmagias = 4;
 		atributoPadrao = AtributoConstantes.WIS;
 		addAquesFisicos(ItemPadrao.Soco());
 		
@@ -295,8 +313,6 @@ public class Class extends Raca {
 		addBonus(BonusPadrao.ArmaduraMedia());
 
 		addBonus(BonusPadrao.ArmasSimples());
-		
-		addBonus(BonusPadrao.ArmasMarciais());
 		
 		addBonus(BonusPadrao.escudo());
 		
@@ -320,6 +336,82 @@ public class Class extends Raca {
 		
 	}
 	
+	public void Druida() {
+
+		nomeDaClasse = ClassConstantes.DRUIDA;
+
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+		Nmagias = 5;
+		atributoPadrao = AtributoConstantes.WIS;
+		addAquesFisicos(ItemPadrao.Soco());
+		
+		addBonus(BonusPadrao.ArmaduraLeve());
+		
+		addBonus(BonusPadrao.ArmaduraMedia());
+		
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		setArmadura(ItemPadrao.ArmaduraDeCouro());
+		
+		addBonus(BonusPadrao.escudo());
+		
+		setEscudos(ItemPadrao.Escudosimples());
+		
+		addItem(ItemPadrao.cimitarra());
+		
+		addSkill(SkillPadrao.Polimorf());		
+				
+	}
+	
+	public void Urso() {
+
+		nomeDaClasse = "Urso";
+
+		hp = super.getHp() + DadosConstantes.D8*2 + getConMod();
+		Nmagias = 2;
+		
+		setCon(getCon() + 4);
+		setStr(getStr() + 2);
+		
+		addAquesFisicos(ItemPadrao.garra());
+		addMagia(MagiaPadrao.Patada());
+		addBonus(BonusPadrao.ArmasMarciais());
+		setArmadura(ItemPadrao.ArmaduraDeCouro());
+		
+	}
+	
+	public void jaguar() {
+
+		nomeDaClasse = "Jaguar";
+
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+		Nmagias = 2;
+		
+		setCon(getDex() + 4);
+		setStr(getStr() + 4);
+		
+		addAquesFisicos(ItemPadrao.arrahao());
+		addMagia(MagiaPadrao.Mordida());
+		addBonus(BonusPadrao.ArmasMarciais());
+		setArmadura(ItemPadrao.ArmaduraDeCouro());
+		
+	}
+	
+	public void coelho() {
+
+		nomeDaClasse = "Coelho";
+
+		hp = super.getHp() + DadosConstantes.D4 + getConMod();
+		Nmagias = 2;
+		
+		setCon(getDex() + 4);
+		
+		addAquesFisicos(ItemPadrao.mordidinha());
+		addMagia(MagiaPadrao.Encantado());
+		addBonus(BonusPadrao.ArmasMarciais());
+		setArmadura(ItemPadrao.Saltitante());
+		
+	}
 	
 
 	public Skill getSkill(String skillNome) {

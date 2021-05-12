@@ -19,6 +19,19 @@ public class DeBuffPadrao {
 
 		return debuff;
 	}
+	
+	public static DeBuff sangramento() {
+
+		debuff = new DeBuff();
+
+		debuff.setNome("Sangramento");
+		debuff.setDano(1);
+		debuff.setDanoOnHit(1);
+		debuff.setTime(3);
+		debuff.setTipo(DebuffConstantes.SANGUE);
+
+		return debuff;
+	}
 
 	public static DeBuff stun() {
 
@@ -33,11 +46,11 @@ public class DeBuffPadrao {
 
 	public static DeBuff StunTeste() {
 
-		debuff.setNome("Iludido");
+		debuff.setNome("Stunado");
 		debuff.setTime(1);
 		debuff.setStun(true);
 		debuff.setTeste(true);
-		debuff.setTipoteste(AtributoConstantes.INT);
+		debuff.setTipoteste(AtributoConstantes.CON);
 
 		return debuff;
 

@@ -70,6 +70,19 @@ public class SkillPadrao {
 
 	}
 	
+	public static Skill Polimorf() {
+
+		 skill = new Skill();
+		 skill.setTime(2);
+		 skill.setTiposkill(ItensConstates.DANO_M);
+		 skill.setAlvos(true);
+		 skill.setNome("Transform");
+		 skill.setEspacoDeSkill(2);
+		 
+		 return skill;
+
+	}
+	
 	
 	
 }

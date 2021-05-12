@@ -152,6 +152,30 @@ public class ItemPadrao {
 		return item;
 	}
 	
+	public static Item Saltitante() {
+		
+		item=new Item();
+		
+		item.setNome("Saltitante");
+		item.setPreco(0);
+		item.setAc(18);
+		item.setTipoItem(ItensConstates.ARMADURAL);
+		
+		return item;
+	}
+	
+	public static Item PeleGrossa() {
+		
+		item=new Item();
+		
+		item.setNome("Pele Grossa");
+		item.setPreco(0);
+		item.setAc(14);
+		item.setTipoItem(ItensConstates.ARMADURAL);
+		
+		return item;
+	}
+	
 	public static Item Soco() {
 		
 		item=new Item();
@@ -197,6 +221,57 @@ item=new Item();
 		item.setAtributo(AtributoConstantes.STR);
 		item.setMao(ItensConstates.MAO1);
 		item.setTipoItem(ItensConstates.ARMAS);
+		
+		return item;
+
+	}
+	
+	public static Item garra() {
+		
+		item=new Item();
+		
+		item.setNome("Garra");
+		item.setDadoDeDano(DadosConstantes.D6N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(0);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.STR);
+		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAS);
+		
+		return item;
+
+	}
+	
+	public static Item arrahao() {
+		
+		item=new Item();
+		
+		item.setNome("Arranão");
+		item.setDadoDeDano(DadosConstantes.D10N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(0);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.DEX);
+		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAM);
+		
+		return item;
+
+	}
+	
+	public static Item mordidinha() {
+		
+		item=new Item();
+		
+		item.setNome("Arranão");
+		item.setDadoDeDano(DadosConstantes.D4N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(0);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.DEX);
+		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAM);
 		
 		return item;
 

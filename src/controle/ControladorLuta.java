@@ -56,6 +56,7 @@ public class ControladorLuta {
 	private boolean critical;
 	private static Random rand = new Random();
 	private boolean erroCritico0;
+	String bicho = "";
 
 	public void Luta(List<Criatura> criaturaLista) {
 
@@ -91,15 +92,15 @@ public class ControladorLuta {
 			criatura = criaturas.get(ativo);
 
 			System.out.println(criatura.getNome());
-			
+
 			if (criatura.isStunado()) {
 
 				System.out.println("Você foi atordoado e perdeu seu turno\n");
-				
+
 				ExecutaDebuff();
-				
+
 				proximo();
-				
+
 				continue;
 			}
 
@@ -115,8 +116,51 @@ public class ControladorLuta {
 
 				AddBuffs(passivo);
 
-				acaoNome = selecionador20();
+				for (Skill skil : criatura.getBuffs()) {
 
+					if (skil.getNome().equals(SkillPadrao.Polimorf().getNome()) && skil.getTime() == 2) {
+						
+						
+
+						if (criatura.getClass().getName() != "Urso") {
+
+							System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
+
+						}
+
+						String m = criatura.getNomeDaClasse();
+
+						do {
+							
+							int p=0;
+
+							if (p != 0) {
+
+								System.out.println("Você já é um " + criatura.getClass() + ", tente outra coisa");
+
+							}
+
+							switch (Uteis.escaneador(4)) {
+
+							case 1:
+								criatura.setClass("jaguar");
+								break;
+							case 2:
+								criatura.setClass("coelho");
+								break;
+							case 3:
+								criatura.setClass("urso");
+								break;
+							}
+							
+							p++;
+
+						} while (criatura.getNomeDaClasse() == m);
+					}
+				}
+				
+				acaoNome = selecionador20();
+				
 			}
 
 			if (ATAQUE.equals(acao)) {
@@ -314,10 +358,8 @@ public class ControladorLuta {
 						System.out.println("\n" + passivo.getNome() + "falhou no teste de " + magia.getCD());
 
 					}
-					
-					System.out.println("Magia deu "+ dano+ " de dano");
-					
-					
+
+					System.out.println("Magia deu " + dano + " de dano");
 
 					dano = dano + MarcaSolar();
 
@@ -342,7 +384,16 @@ public class ControladorLuta {
 
 					passivo.danoRecebido(dano);
 
-					validaDeBuffI();
+					if (acao == ITEM2 || acao == ATAQUE) {
+
+						validaDeBuffI();
+
+					} else {
+
+						validaDeBuffM();
+
+					}
+
 				}
 
 			} else {
@@ -369,9 +420,9 @@ public class ControladorLuta {
 
 			System.out.println("vida de " + passivo.getNome() + " = " + passivo.getHp() + "\n");
 
-			for (Map.Entry<String, Skill> skill : criatura.getSkills().entrySet()) {
+			for (Skill skill : criatura.getBuffs()) {
 
-				if (skill.getValue().getNome().equals(SkillPadrao.ProtegidoPelaLuz().getNome())) {
+				if (skill.getNome().equals(SkillPadrao.ProtegidoPelaLuz().getNome())) {
 
 					System.out.println("\nComo protegido da luz você se cura em 1 de vida\n");
 
@@ -464,20 +515,18 @@ public class ControladorLuta {
 
 					if (0 != debuff.getDanoOnHit()) {
 
-						System.out.println(passivo.getNome() + " recebe mais " + debuff.getDanoOnHit()
-								+ " em dano de " + debuff.getTipo());
+						System.out.println(passivo.getNome() + " recebe mais " + debuff.getDanoOnHit() + " em dano de "
+								+ debuff.getTipo());
 					}
 
 					if (resistenciaP(debuff)) {
 
-						System.out.println(
-								passivo.getNome() + "seu corpo forte segura os efeitos do veneneno\n");
+						System.out.println(passivo.getNome() + "seu corpo forte segura os efeitos do veneneno\n");
 						passivo.danoRecebido(debuff.getDanoOnHit() / 2);
 
 					} else if (resistenciaF(debuff)) {
 
-						System.out.println(
-								passivo.getNome() + "sua acendencia draconica segura os efeitos do fogo\n");
+						System.out.println(passivo.getNome() + "sua acendencia draconica segura os efeitos do fogo\n");
 
 						passivo.danoRecebido(debuff.getDanoOnHit() / 2);
 
@@ -509,21 +558,19 @@ public class ControladorLuta {
 
 					if (0 != debuff.getDanoOnHit()) {
 
-						System.out.println(passivo.getNome() + " recebe mais " + debuff.getDanoOnHit()
-								+ " em dano de " + debuff.getTipo());
+						System.out.println(passivo.getNome() + " recebe mais " + debuff.getDanoOnHit() + " em dano de "
+								+ debuff.getTipo());
 
 					}
 
 					if (resistenciaP(debuff)) {
 
-						System.out.println(
-								passivo.getNome() + "seu corpo forte segura os efeitos do veneneno\n");
+						System.out.println(passivo.getNome() + "seu corpo forte segura os efeitos do veneneno\n");
 						passivo.danoRecebido(debuff.getDanoOnHit() / 2);
 
 					} else if (resistenciaF(debuff)) {
 
-						System.out.println(
-								passivo.getNome() + "sua acendencia draconica segura os efeitos do fogo\n");
+						System.out.println(passivo.getNome() + "sua acendencia draconica segura os efeitos do fogo\n");
 
 						passivo.danoRecebido(debuff.getDanoOnHit() / 2);
 
@@ -731,7 +778,7 @@ public class ControladorLuta {
 
 		String acaoEscolhida;
 
-		List<String> acoes = new ArrayList();
+		List<String> acoes = new ArrayList<>();
 
 		System.out.println("Escolha sua Ação: ");
 
@@ -753,7 +800,7 @@ public class ControladorLuta {
 
 		}
 
-		if (criatura.getSkills() != null && !SKILL.equals(acao)) {
+		if (criatura.getSkills() != null && !SKILL.equals(acao) && skillUtil()) {
 
 			acoes.add(SKILL);
 
@@ -811,11 +858,7 @@ public class ControladorLuta {
 
 		case SKILL:
 
-			if (skillUtil()) {
-				return escolhiSkill();
-			}
-
-			break;
+			return escolhiSkill();
 
 		}
 		return null;
@@ -969,9 +1012,13 @@ public class ControladorLuta {
 
 				criatura.setInte(criatura.getInte() - skill.getBonusAtributo());
 			}
-
+			
+			if(skill==SkillPadrao.Polimorf()) {
+				
+				criatura.setClass(ClassConstantes.DRUIDA);
+				
+			}
 		}
-
 	}
 
 	private void naoBonusM(Criatura criatura, Magia magia) {
@@ -1010,7 +1057,7 @@ public class ControladorLuta {
 
 	private boolean validaSkill(String skillNome) {
 
-		Skill skill = criatura.getSkill(skillNome);
+		Skill skill = criatura.getSkills().get(skillNome);
 
 		return skill.getEspacoDeSkill() >= 0;
 	}
@@ -1726,12 +1773,12 @@ public class ControladorLuta {
 				}
 
 			}
-			
+
 			i = i + i1;
 
 			if (i1 != 0) {
 
-				System.out.println("Você como protegido pela luz explode a marca solar, causando " +i+ " de dano");
+				System.out.println("Você como protegido pela luz explode a marca solar, causando " + i + " de dano");
 
 			} else {
 

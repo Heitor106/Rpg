@@ -19,11 +19,11 @@ public class MagiaPadrao {
 		magia.setDisparavel(false);
 		magia.setTipoDeDano(ItensConstates.DANO_M);
 		magia.setDebuff(DeBuffPadrao.StunTeste());
-		
+
 		return magia;
 
 	}
-	
+
 	public static Magia CurarFerimentos() {
 
 		Magia magia = new Magia();
@@ -37,7 +37,7 @@ public class MagiaPadrao {
 		return magia;
 
 	}
-	
+
 	public static Magia CuraSagrada() {
 
 		Magia magia = new Magia();
@@ -51,7 +51,7 @@ public class MagiaPadrao {
 		return magia;
 
 	}
-	
+
 	public static Magia VitalitadeFalsa() {
 
 		Magia magia = new Magia();
@@ -64,7 +64,7 @@ public class MagiaPadrao {
 		return magia;
 
 	}
-	
+
 	public static Magia ArmaduraDeNotas() {
 
 		Magia magia = new Magia();
@@ -79,111 +79,128 @@ public class MagiaPadrao {
 	}
 
 	public static Magia sopro() {
-		
-	Magia magia = new Magia();
-		
-	magia.setNome("Sopro do dragão");
-	magia.setValorDeDado(DadosConstantes.D6N);
-	magia.setnDdos(2);
-	magia.setEspacoDeMagia(0);
-	magia.setCD(AtributoConstantes.DEX);
-	magia.setDisparavel(false);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	return magia;
 
- }
-	
-	
+		Magia magia = new Magia();
+
+		magia.setNome("Sopro do dragão");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(2);
+		magia.setEspacoDeMagia(0);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+
+	public static Magia Mordida() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Dente de aço");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(2);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.sangramento());
+		return magia;
+
+	}
+
 	public static Magia ToqueChocante() {
-		
-	Magia magia = new Magia();
 
-	magia.setNome("Toque chocante");
-	magia.setValorDeDado(DadosConstantes.D4N);
-	magia.setnDdos(1);
-	magia.setEspacoDeMagia(0);
-	magia.setCD(AtributoConstantes.DEX);
-	magia.setDisparavel(true);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	magia.setDebuff(DeBuffPadrao.StunTeste());
-	return magia;
+		Magia magia = new Magia();
 
- }
-	
+		magia.setNome("Toque chocante");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(0);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.StunTeste());
+		return magia;
+
+	}
+
 	public static Magia Ilusão() {
-		
-	Magia magia = new Magia();
 
-	magia.setNome("Ilusão");
-	magia.setValorDeDado(DadosConstantes.D4N);
-	magia.setnDdos(1);
-	magia.setEspacoDeMagia(0);
-	magia.setCD(AtributoConstantes.INT);
-	magia.setDisparavel(true);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	magia.setDebuff(DeBuffPadrao.StunTeste());
-	
-	return magia;
+		Magia magia = new Magia();
 
- }
+		magia.setNome("Ilusão");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(0);
+		magia.setCD(AtributoConstantes.INT);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.StunTeste());
+
+		return magia;
+
+	}
+
 	public static Magia EnergiaEscura() {
-		
-	Magia magia = new Magia();
-		
-	magia.setNome("Energia escura");
-	magia.setValorDeDado(DadosConstantes.D4N);
-	magia.setnDdos(3);
-	magia.setEspacoDeMagia(2);
-	magia.setCD(AtributoConstantes.DEX);
-	magia.setDisparavel(false);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	return magia;
 
- }
-	
+		Magia magia = new Magia();
+
+		magia.setNome("Energia escura");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(3);
+		magia.setEspacoDeMagia(2);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+
 	public static Magia RajadaMistica() {
-		
-	Magia magia = new Magia();
-		
-	magia.setNome("Rajada Mística");
-	magia.setValorDeDado(DadosConstantes.D10N);
-	magia.setnDdos(1);
-	magia.setEspacoDeMagia(2);
-	magia.setDisparavel(true);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	return magia;
 
- }
+		Magia magia = new Magia();
+
+		magia.setNome("Rajada Mística");
+		magia.setValorDeDado(DadosConstantes.D10N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+
 	public static Magia RajadaMisticaF() {
-		
-	Magia magia = new Magia();
-		
-	magia.setNome("Rajada Mística Empoderada");
-	magia.setValorDeDado(DadosConstantes.D12N);
-	magia.setnDdos(1);
-	magia.setEspacoDeMagia(2);
-	magia.setDisparavel(true);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	return magia;
 
- }
-	
+		Magia magia = new Magia();
+
+		magia.setNome("Rajada Mística Empoderada");
+		magia.setValorDeDado(DadosConstantes.D12N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+
 	public static Magia RajadaMisticaS() {
-		
-	Magia magia = new Magia();
-		
-	magia.setNome("Rajada Mística Focada");
-	magia.setValorDeDado(DadosConstantes.D10N);
-	magia.setnDdos(1);
-	magia.setEspacoDeMagia(2);
-	magia.setDisparavel(true);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	magia.setDebuff(DeBuffPadrao.StunTeste());
-	return magia;
 
- }
+		Magia magia = new Magia();
 
-public static Magia RaioDeLuz() {
+		magia.setNome("Rajada Mística Focada");
+		magia.setValorDeDado(DadosConstantes.D10N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.StunTeste());
+		return magia;
+
+	}
+
+	public static Magia RaioDeLuz() {
 
 		Magia magia = new Magia();
 
@@ -194,27 +211,61 @@ public static Magia RaioDeLuz() {
 		magia.setCD(AtributoConstantes.CON);
 		magia.setDisparavel(true);
 		magia.setTipoDeDano(ItensConstates.DANO_M);
-		
+
 		return magia;
 
 	}
 
-public static Magia MarcaSolar() {
+	public static Magia MarcaSolar() {
 
-	Magia magia = new Magia();
+		Magia magia = new Magia();
 
-	magia.setNome("Marca solar");
-	magia.setValorDeDado("1");
-	magia.setnDdos(1);
-	magia.setEspacoDeMagia(2);
-	magia.setCD(AtributoConstantes.CON);
-	magia.setDisparavel(false);
-	magia.setTipoDeDano(ItensConstates.DANO_M);
-	magia.setDebuff(DeBuffPadrao.desvantagem());
-	magia.setDebuff(DeBuffPadrao.marcaSolar());
+		magia.setNome("Marca solar");
+		magia.setValorDeDado("1");
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setCD(AtributoConstantes.CON);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.desvantagem());
+		magia.setDebuff(DeBuffPadrao.marcaSolar());
+
+		return magia;
+
+	}
+
+	public static Magia Patada() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Ilusão");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.CON);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_F);
+		magia.setDebuff(DeBuffPadrao.StunTeste());
+
+		return magia;
+
+	}
 	
-	return magia;
+	public static Magia Encantado() {
 
-}
-	
+		Magia magia = new Magia();
+
+		magia.setNome("encantado");
+		magia.setValorDeDado("0");
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.CHA);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.desvantagem());
+
+		return magia;
+
+	}
+
 }
