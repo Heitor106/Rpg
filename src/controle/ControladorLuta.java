@@ -125,7 +125,6 @@ public class ControladorLuta {
 						if (criatura.getClass().getName() != "Urso") {
 
 							System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
-
 						}
 
 						String m = criatura.getNomeDaClasse();
