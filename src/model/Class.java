@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import contantes.AtributoConstantes;
 import contantes.ClassConstantes;
@@ -17,12 +16,12 @@ public class Class extends Raca {
 	private String atributoPadrao = "";
 	private Item armadura;
 	private Item escudos;
-	private Map<String, Magia> magias;
-	private Map<String, Skill> skills;
-	private Map<String, Bonus> bonuses;
-	private Map<String, Item> itens;
-	private Map<String, Item> ataquesFisicos;
-	private Map<String, Magia> magiasPassivas;
+	private Map<String, Magia> magias = new HashMap<>();
+	private Map<String, Skill> skills = new HashMap<>();
+	private Map<String, Bonus> bonuses = new HashMap<>();
+	private Map<String, Item> itens = new HashMap<>();
+	private Map<String, Item> ataquesFisicos = new HashMap<>();
+	private Map<String, Magia> magiasPassivas = new HashMap<>();
 	private int CDTR = 8 + ModPadrao() + 2;
 
 	public String getAtributoPadrao() {
@@ -551,5 +550,8 @@ public class Class extends Raca {
 	public void setCDTR(int cDTR) {
 		CDTR = cDTR;
 	}
+
+	
+	
 
 }

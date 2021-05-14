@@ -2,11 +2,11 @@ package controle;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-
 import contantes.AtributoConstantes;
 import contantes.BonusConstantes;
 import contantes.ClassConstantes;
@@ -46,6 +46,7 @@ public class ControladorLuta {
 	private Magia magia;
 	private Item item;
 	private boolean disparavel = true;
+	private static Map<String, Criatura> FormasHumanas = new HashMap<>();
 	private List<Criatura> criaturas;
 	private List<Criatura> criaturasMortas = new ArrayList();
 	private int ativo;
@@ -56,15 +57,12 @@ public class ControladorLuta {
 	private boolean critical;
 	private static Random rand = new Random();
 	private boolean erroCritico0;
-	String bicho = "";
 
 	public void Luta(List<Criatura> criaturaLista) {
 
 		this.criaturas = criaturaLista;
 		boolean batalha = true;
 		int dadoDeAtaque;
-
-		erroCritico0 = false;
 
 		System.out.println("Iniciativas: \n");
 
@@ -88,6 +86,8 @@ public class ControladorLuta {
 			ativo = jogavel;
 
 			critical = false;
+
+			erroCritico0 = false;
 
 			criatura = criaturas.get(ativo);
 
@@ -116,50 +116,10 @@ public class ControladorLuta {
 
 				AddBuffs(passivo);
 
-				for (Skill skil : criatura.getBuffs()) {
+				Polimorf(criatura);
 
-					if (skil.getNome().equals(SkillPadrao.Polimorf().getNome()) && skil.getTime() == 2) {
-						
-						
-
-						if (criatura.getClass().getName() != "Urso") {
-
-							System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
-						}
-
-						String m = criatura.getNomeDaClasse();
-
-						do {
-							
-							int p=0;
-
-							if (p != 0) {
-
-								System.out.println("Você já é um " + criatura.getClass() + ", tente outra coisa");
-
-							}
-
-							switch (Uteis.escaneador(4)) {
-
-							case 1:
-								criatura.setClass("jaguar");
-								break;
-							case 2:
-								criatura.setClass("coelho");
-								break;
-							case 3:
-								criatura.setClass("urso");
-								break;
-							}
-							
-							p++;
-
-						} while (criatura.getNomeDaClasse() == m);
-					}
-				}
-				
 				acaoNome = selecionador20();
-				
+
 			}
 
 			if (ATAQUE.equals(acao)) {
@@ -194,14 +154,7 @@ public class ControladorLuta {
 
 					passivo.addBuffsM(magia);
 
-					if (ativo < criaturas.size() - 1) {
-
-						jogavel++;
-
-					} else {
-
-						jogavel = 0;
-					}
+					proximo();
 
 					continue;
 
@@ -434,7 +387,9 @@ public class ControladorLuta {
 			}
 
 			setBonus();
+
 			setBonusM();
+
 			ExecutaDebuff();
 
 			if (passivo.getHp() == 0 && passivo.getNomeRaca().equals(RacaConstantes.MEIO_ORC)) {
@@ -465,15 +420,10 @@ public class ControladorLuta {
 				morte();
 
 			}
+			
+			criaturas.set(jogavel, criatura);
 
-			if (ativo < criaturas.size() - 1) {
-
-				jogavel++;
-
-			} else {
-
-				jogavel = 0;
-			}
+			proximo();
 
 			if (!Fim()) {
 
@@ -978,7 +928,7 @@ public class ControladorLuta {
 		return criatura;
 	}
 
-	private void naoBonus(Criatura criatura, Skill skill) {
+	private Criatura naoBonus(Criatura criatura, Skill skill) {
 
 		Boolean ativo = bonusAtivo(skill);
 
@@ -1011,16 +961,49 @@ public class ControladorLuta {
 
 				criatura.setInte(criatura.getInte() - skill.getBonusAtributo());
 			}
-			
-			if(skill==SkillPadrao.Polimorf()) {
+
+			if (skill.getNome().equals(SkillPadrao.Polimorf().getNome())) {
+
+				int vida = 0;
+				List < Skill > buffs = new ArrayList();
+				List < Magia> buffsM = new ArrayList();
+				List <DeBuff> debuffs= new ArrayList();
+				boolean AmigoC = criatura.isAmigo();
+				boolean MarcaSolarC = criatura.isMarcaSolar();
+				boolean StunadoC = criatura.isStunado();
+				boolean DesvantagemC = criatura.isDesvantagem();
 				
-				criatura.setClass(ClassConstantes.DRUIDA);
+				switch (criatura.getNomeDaClasse()) {
+
+				case "Jaguar":
+					vida = (criatura.getHp());
+					break;
+				case "Coelho":
+					vida = (criatura.getHp() * 2);
+					break;
+				case "Urso":
+					vida = (criatura.getHp() / 2);
+					break;
+				}
+
+				criatura = FormasHumanas.get(criatura.getNome());
+
+				criatura.setHp(vida);
+				criatura.setBuffs(buffs);
+				criatura.setBuffsM(buffsM);
+				criatura.setDebuffs(debuffs);
+				criatura.setAmigo(AmigoC);
+				criatura.setMarcaSolar(MarcaSolarC);
+				criatura.setStunado(StunadoC);
+				criatura.setDesvantagem(DesvantagemC);
 				
 			}
 		}
+
+		return criatura;
 	}
 
-	private void naoBonusM(Criatura criatura, Magia magia) {
+	private Criatura naoBonusM(Criatura criatura, Magia magia) {
 
 		Boolean ativoM = bonusMAtivo(magia);
 
@@ -1032,6 +1015,7 @@ public class ControladorLuta {
 		}
 
 		validaLista(criatura, this.ativo);
+		return criatura;
 
 	}
 
@@ -1576,7 +1560,7 @@ public class ControladorLuta {
 
 			Skill skill = criatura.getBuffs().get(i);
 			validaBonus(skill);
-			naoBonus(criatura, skill);
+			criatura = naoBonus(criatura, skill);
 			skills.add(skill);
 
 		}
@@ -1593,7 +1577,7 @@ public class ControladorLuta {
 
 			Magia magia = criatura.getBuffsM().get(i);
 			validaBonusM(magia);
-			naoBonusM(criatura, magia);
+			criatura = naoBonusM(criatura, magia);
 			magias.add(magia);
 
 		}
@@ -1675,7 +1659,7 @@ public class ControladorLuta {
 
 			int problema = rand.nextInt(2);
 
-			System.out.println("Você teve um erro crítico ");
+			System.out.print("\nVocê teve um erro crítico ");
 
 			if (ATAQUE.equals(acao)) {
 
@@ -1811,4 +1795,92 @@ public class ControladorLuta {
 
 	}
 
+	static Criatura Polimorf(Criatura criatura) {
+
+		for (Skill skil : criatura.getBuffs()) {
+
+			if (skil.getNome().equals(SkillPadrao.Polimorf().getNome()) && skil.getTime() == 2) {
+
+				Criatura druida = new  Criatura(criatura);
+
+				if (criatura.getNomeDaClasse().equals(ClassConstantes.DRUIDA)) {
+
+					FormasHumanas.put(criatura.getNome(), druida);
+
+				}
+
+				System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
+
+				String m = criatura.getNomeDaClasse();
+
+				do {
+
+					int p = 0;
+
+					if (p != 0) {
+
+						System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
+
+						System.out.println("Você já é um " + criatura.getClass() + ", tente outra coisa");
+
+					}
+
+					switch (Uteis.escaneador(3)) {
+
+					case 1:
+						criatura = mudancaDeClasse(criatura, "jaguar");
+						break;
+					case 2:
+						criatura = mudancaDeClasse(criatura, "coelho");
+						break;
+					case 3:
+						criatura = mudancaDeClasse(criatura, "urso");
+						break;
+					}
+
+					p++;
+
+				} while (criatura.getNomeDaClasse() == m);
+
+				return criatura;
+
+			} else {
+
+				return criatura;
+
+			}
+		}
+		return criatura;
+	}
+
+	static Criatura mudancaDeClasse(Criatura criatura, String animal) {
+
+		int vida = 0;
+
+		criatura.getMagias().clear();
+		criatura.getMagiasPassivas().clear();
+		criatura.getItens().clear();
+		criatura.getSkills().clear();
+		criatura.getBonuses().clear();
+		criatura.getAtaquesFisicos().clear();
+
+		switch (animal) {
+
+		case "jaguar":
+			vida = (criatura.getHp());
+			break;
+		case "coelho":
+			vida = (criatura.getHp() / 2);
+			break;
+		case "urso":
+			vida = (criatura.getHp() * 2);
+			break;
+		}
+
+		criatura.setClass(animal);
+
+		criatura.setHp(vida);
+
+		return criatura;
+	}
 }
