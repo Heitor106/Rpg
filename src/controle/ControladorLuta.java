@@ -2,11 +2,11 @@ package controle;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-
 import contantes.AtributoConstantes;
 import contantes.BonusConstantes;
 import contantes.ClassConstantes;
@@ -46,8 +46,9 @@ public class ControladorLuta {
 	private Magia magia;
 	private Item item;
 	private boolean disparavel = true;
+	private static Map<String, Criatura> FormasHumanas = new HashMap<>();
 	private List<Criatura> criaturas;
-	private List<Criatura> criaturasMortas = new ArrayList();
+	private List<Criatura> criaturasMortas = new ArrayList<>();
 	private int ativo;
 	private int jogavel;
 	private Criatura passivo;
@@ -56,15 +57,14 @@ public class ControladorLuta {
 	private boolean critical;
 	private static Random rand = new Random();
 	private boolean erroCritico0;
-	String bicho = "";
-
+	static int NdTurnos;
+	int turnos;
+	
 	public void Luta(List<Criatura> criaturaLista) {
 
 		this.criaturas = criaturaLista;
 		boolean batalha = true;
 		int dadoDeAtaque;
-
-		erroCritico0 = false;
 
 		System.out.println("Iniciativas: \n");
 
@@ -85,9 +85,13 @@ public class ControladorLuta {
 
 		while (batalha) {
 
+			NdTurnos = 1;
+
 			ativo = jogavel;
 
-			critical = false;
+			critical = true;
+
+			erroCritico0 = true;
 
 			criatura = criaturas.get(ativo);
 
@@ -97,385 +101,361 @@ public class ControladorLuta {
 
 				System.out.println("Você foi atordoado e perdeu seu turno\n");
 
-				ExecutaDebuff();
+				executaDebuff();
 
 				proximo();
 
 				continue;
 			}
 
-			String acaoNome = selecionador20();
+			for (turnos = 0; turnos < NdTurnos; turnos++) {
 
-			if (SKILL.equals(acao)) {
+				String acaoNome = selecionador20();
 
-				Skill skill = criatura.getSkill(acaoNome);
+				if (SKILL.equals(acao)) {
 
-				passivo = escolhaAlvoDeBuff(skill);
+					Skill skill = criatura.getSkill(acaoNome);
 
-				passivo.addBuffs(skill);
+					passivo = escolhaAlvoDeBuff(skill);
 
-				AddBuffs(passivo);
+					passivo.addBuffs(skill);
 
-				for (Skill skil : criatura.getBuffs()) {
+					AddBuffs(passivo);
 
-					if (skil.getNome().equals(SkillPadrao.Polimorf().getNome()) && skil.getTime() == 2) {
-						
-						
+					polimorf(criatura);
+					
+					SurtoDeAcao(criatura);
 
-						if (criatura.getClass().getName() != "Urso") {
-
-							System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
-						}
-
-						String m = criatura.getNomeDaClasse();
-
-						do {
-							
-							int p=0;
-
-							if (p != 0) {
-
-								System.out.println("Você já é um " + criatura.getClass() + ", tente outra coisa");
-
-							}
-
-							switch (Uteis.escaneador(4)) {
-
-							case 1:
-								criatura.setClass("jaguar");
-								break;
-							case 2:
-								criatura.setClass("coelho");
-								break;
-							case 3:
-								criatura.setClass("urso");
-								break;
-							}
-							
-							p++;
-
-						} while (criatura.getNomeDaClasse() == m);
-					}
-				}
-				
-				acaoNome = selecionador20();
-				
-			}
-
-			if (ATAQUE.equals(acao)) {
-
-				item = criatura.getAtaquesFisicos().get(acaoNome);
-
-			} else if (ITEM2.equals(acao)) {
-
-				item = criatura.getItens().get(acaoNome);
-
-			} else if (MAGIA2.equals(acao)) {
-
-				magia = criatura.getMagias().get(acaoNome);
-
-			} else if (MAGIA_PASSIVA.equals(acao)) {
-
-				magia = criatura.getMagiasPassivas().get(acaoNome);
-
-				if (!magia.isCura()) {
-
-					Magia magia = criatura.getMagiasPassivas().get(acaoNome);
-
-					criatura.addBuffsM(magia);
-
-					System.out.println("Vai usarem quem?\n");
-
-					ini = escolhaIni();
-
-					passivo = criaturas.get(ini);
-
-					AddBuffsM(passivo);
-
-					passivo.addBuffsM(magia);
-
-					if (ativo < criaturas.size() - 1) {
-
-						jogavel++;
-
-					} else {
-
-						jogavel = 0;
-					}
-
-					continue;
-
-				}
-			}
-
-			System.out.println("Vai usarem quem?\n");
-
-			ini = escolhaIni();
-
-			passivo = criaturas.get(ini);
-
-			batalha = true;
-
-			dadoDeAtaque = dadoDeAtaque();
-
-			if (!disparavel) {
-
-				System.out.println("Jogador " + criatura.getNome());
-
-			} else {
-
-				System.out.println("Jogador " + criatura.getNome() + ": " + dadoDeAtaque + "\n");
-
-				int dadoDeAtaque2 = dadoDeAtaque + Inspiracao();
-
-				if (dadoDeAtaque2 != dadoDeAtaque) {
-
-					System.out.println("Jogador " + criatura.getNome() + "seu novo dado é: " + dadoDeAtaque2 + "\n");
-					dadoDeAtaque = dadoDeAtaque2;
+					acaoNome = selecionador20();
 
 				}
 
-			}
+				if (ATAQUE.equals(acao)) {
 
-			if (erroCritico0) {
+					item = criatura.getAtaquesFisicos().get(acaoNome);
 
-				proximo();
+				} else if (ITEM2.equals(acao)) {
 
-				continue;
-			}
+					item = criatura.getItens().get(acaoNome);
 
-			if (dadoDeAtaque >= passivo.getAc()) {
+				} else if (MAGIA2.equals(acao)) {
 
-				int dano = dadoDeDano();
+					magia = criatura.getMagias().get(acaoNome);
 
-				if (acao.equals(MAGIA_PASSIVA) && magia.isCura()) {
+				} else if (MAGIA_PASSIVA.equals(acao)) {
 
-					int dano2 = dano + Inspiracao();
+					magia = criatura.getMagiasPassivas().get(acaoNome);
 
-					if (dano != dano2) {
+					if (!magia.isCura()) {
 
-						System.out.println(passivo.getNome() + " se curou em " + dano2 + " de vida\n");
+						Magia magia = criatura.getMagiasPassivas().get(acaoNome);
 
-						dano = dano2;
+						criatura.addBuffsM(magia);
 
-						passivo.vidaGanha(dano);
+						System.out.println("Vai usarem quem?\n");
 
-					} else {
+						ini = escolhaIni();
 
-						System.out.println(passivo.getNome() + " se curou em " + dano + " de vida\n");
+						passivo = criaturas.get(ini);
 
-						passivo.vidaGanha(dano);
-					}
+						AddBuffsM(passivo);
 
-				} else if (acao.equals(MAGIA2) && !disparavel) {
+						passivo.addBuffsM(magia);
 
-					int dado = Dado.D20();
+						proximo();
 
-					if (validaGnomo()) {
-
-						System.out.println("Sua resistencia gnomica contra magias entra em ação");
-
-						int i1 = Dado.D20();
-
-						if (i1 > dado) {
-
-							dado = i1;
-
-						}
+						continue;
 
 					}
+				}
 
-					int bonus = 0;
+				System.out.println("Vai usarem quem?\n");
 
-					switch (magia.getCD()) {
+				ini = escolhaIni();
 
-					case AtributoConstantes.STR:
+				passivo = criaturas.get(ini);
 
-						if (null != passivo.getBonuses().get(BonusConstantes.RFORCA)) {
+				batalha = true;
 
-							bonus = passivo.getBonuses().get(BonusConstantes.RFORCA).getBonus();
-						}
+				dadoDeAtaque = dadoDeAtaque();
 
-						dado = dado + passivo.getStrMod();
-						break;
+				if (!disparavel) {
 
-					case AtributoConstantes.DEX:
-
-						if (null != passivo.getBonuses().get(BonusConstantes.RDEX)) {
-
-							bonus = passivo.getBonuses().get(BonusConstantes.RDEX).getBonus();
-						}
-						dado = dado + passivo.getDexMod();
-						break;
-
-					case AtributoConstantes.INT:
-
-						if (null != passivo.getBonuses().get(BonusConstantes.RINT)) {
-
-							bonus = passivo.getBonuses().get(BonusConstantes.RINT).getBonus();
-						}
-						dado = dado + passivo.getInteMod();
-						break;
-
-					case AtributoConstantes.WIS:
-
-						if (null != passivo.getBonuses().get(BonusConstantes.RWIS)) {
-
-							bonus = passivo.getBonuses().get(BonusConstantes.RWIS).getBonus();
-						}
-						dado = dado + passivo.getWisMod();
-						break;
-
-					case AtributoConstantes.CON:
-
-						if (null != passivo.getBonuses().get(BonusConstantes.RCON)) {
-
-							bonus = passivo.getBonuses().get(BonusConstantes.RCON).getBonus();
-						}
-						dado = dado + passivo.getConMod();
-						break;
-
-					case AtributoConstantes.CHA:
-
-						if (null != passivo.getBonuses().get(BonusConstantes.RCHA)) {
-
-							bonus = passivo.getBonuses().get(BonusConstantes.RCHA).getBonus();
-						}
-						dado = dado + passivo.getChaMod();
-						break;
-
-					}
-
-					if (dado > criatura.getCDTR()) {
-
-						System.out.println("\n" + passivo.getNome() + " passou no teste de " + magia.getCD());
-
-						dano = dano / 2;
-
-					} else {
-
-						System.out.println("\n" + passivo.getNome() + "falhou no teste de " + magia.getCD());
-
-					}
-
-					System.out.println("Magia deu " + dano + " de dano");
-
-					dano = dano + MarcaSolar();
-
-					System.out.println(passivo.getNome() + " recebeu " + dano + " de dano");
-
-					passivo.danoRecebido(dano);
-
-					validaDeBuffM();
+					System.out.println("Jogador " + criatura.getNome());
 
 				} else {
 
-					if (acao == ITEM2 && critical) {
+					System.out.println("Jogador " + criatura.getNome() + ": " + dadoDeAtaque + "\n");
 
-						System.out.println(criatura.getNome() + " você acertou um CRÍTICO !!!!");
+					int dadoDeAtaque2 = dadoDeAtaque + Inspiracao();
 
-						dano = dano + item.dadoDano();
+					if (dadoDeAtaque2 != dadoDeAtaque) {
+
+						System.out
+								.println("Jogador " + criatura.getNome() + "seu novo dado é: " + dadoDeAtaque2 + "\n");
+						dadoDeAtaque = dadoDeAtaque2;
+
 					}
 
-					System.out.println(passivo.getNome() + " recebeu " + dano + " de dano");
+				}
 
-					dano = dano + MarcaSolar();
+				if (erroCritico0) {
 
-					passivo.danoRecebido(dano);
+					proximo();
 
-					if (acao == ITEM2 || acao == ATAQUE) {
+					continue;
+				}
 
-						validaDeBuffI();
+				if (dadoDeAtaque >= passivo.getAc()) {
 
-					} else {
+					int dano = dadoDeDano();
+
+					if (acao.equals(MAGIA_PASSIVA) && magia.isCura()) {
+
+						int dano2 = dano + Inspiracao();
+
+						if (dano != dano2) {
+
+							System.out.println(passivo.getNome() + " se curou em " + dano2 + " de vida\n");
+
+							dano = dano2;
+
+							passivo.vidaGanha(dano);
+
+						} else {
+
+							System.out.println(passivo.getNome() + " se curou em " + dano + " de vida\n");
+
+							passivo.vidaGanha(dano);
+						}
+
+					} else if (acao.equals(MAGIA2) && !disparavel) {
+
+						int dado = Dado.D20();
+
+						if (validaGnomo()) {
+
+							System.out.println("Sua resistencia gnomica contra magias entra em ação");
+
+							int i1 = Dado.D20();
+
+							if (i1 > dado) {
+
+								dado = i1;
+
+							}
+
+						}
+
+						int bonus = 0;
+
+						switch (magia.getCD()) {
+
+						case AtributoConstantes.STR:
+
+							if (null != passivo.getBonuses().get(BonusConstantes.RFORCA)) {
+
+								bonus = passivo.getBonuses().get(BonusConstantes.RFORCA).getBonus();
+							}
+
+							dado = dado + passivo.getStrMod();
+							break;
+
+						case AtributoConstantes.DEX:
+
+							if (null != passivo.getBonuses().get(BonusConstantes.RDEX)) {
+
+								bonus = passivo.getBonuses().get(BonusConstantes.RDEX).getBonus();
+							}
+							dado = dado + passivo.getDexMod();
+							break;
+
+						case AtributoConstantes.INT:
+
+							if (null != passivo.getBonuses().get(BonusConstantes.RINT)) {
+
+								bonus = passivo.getBonuses().get(BonusConstantes.RINT).getBonus();
+							}
+							dado = dado + passivo.getInteMod();
+							break;
+
+						case AtributoConstantes.WIS:
+
+							if (null != passivo.getBonuses().get(BonusConstantes.RWIS)) {
+
+								bonus = passivo.getBonuses().get(BonusConstantes.RWIS).getBonus();
+							}
+							dado = dado + passivo.getWisMod();
+							break;
+
+						case AtributoConstantes.CON:
+
+							if (null != passivo.getBonuses().get(BonusConstantes.RCON)) {
+
+								bonus = passivo.getBonuses().get(BonusConstantes.RCON).getBonus();
+							}
+							dado = dado + passivo.getConMod();
+							break;
+
+						case AtributoConstantes.CHA:
+
+							if (null != passivo.getBonuses().get(BonusConstantes.RCHA)) {
+
+								bonus = passivo.getBonuses().get(BonusConstantes.RCHA).getBonus();
+							}
+							dado = dado + passivo.getChaMod();
+							break;
+
+						}
+
+						if (dado > criatura.getCDTR()) {
+
+							System.out.println("\n" + passivo.getNome() + " passou no teste de " + magia.getCD());
+
+							dano = dano / 2;
+
+						} else {
+
+							System.out.println("\n" + passivo.getNome() + "falhou no teste de " + magia.getCD());
+
+						}
+
+						System.out.println("Magia deu " + dano + " de dano");
+
+						dano = dano + MarcaSolar();
+
+						System.out.println(passivo.getNome() + " recebeu " + dano + " de dano");
+
+						passivo.danoRecebido(dano);
 
 						validaDeBuffM();
 
-					}
+					} else {
 
-				}
+						if (acao == ITEM2 && critical) {
 
-			} else {
+							System.out.println(criatura.getNome() + " você acertou um CRÍTICO !!!!");
 
-				if (MAGIA_PASSIVA.equals(acao) && !magia.isCura()) {
+							dano = dano + item.dadoDano();
+						}
 
-					if (magia.getBonusMHP() > 0) {
+						System.out.println(passivo.getNome() + " recebeu " + dano + " de dano");
 
-						System.out.println(passivo.getNome() + " ganhou " + magia.getBonusMHP() + " de vida");
-					}
+						dano = dano + MarcaSolar();
+						
+						if(criatura.getNomeDaClasse()==ClassConstantes.BARBARO&&criatura.getHp()<3) {
+							
+							System.out.println("O seu próprio sangue lhe da força, você da mais 2 de dano");
+							dano = dano +2;
+							criatura.vidaGanha(1);
+							
+						}
 
-					if (magia.getBonusMAC() > 0) {
+						passivo.danoRecebido(dano);
 
-						System.out.println(passivo.getNome() + " ganhou " + magia.getBonusMAC() + " de AC");
+						if (acao == ITEM2 || acao == ATAQUE) {
+
+							validaDeBuffI();
+
+						} else {
+
+							validaDeBuffM();
+
+						}
+
 					}
 
 				} else {
 
-					System.out.println("Você errou!!!");
+					if (MAGIA_PASSIVA.equals(acao) && !magia.isCura()) {
+
+						if (magia.getBonusMHP() > 0) {
+
+							System.out.println(passivo.getNome() + " ganhou " + magia.getBonusMHP() + " de vida");
+						}
+
+						if (magia.getBonusMAC() > 0) {
+
+							System.out.println(passivo.getNome() + " ganhou " + magia.getBonusMAC() + " de AC");
+						}
+
+					} else {
+
+						System.out.println("Você errou!!!");
+
+					}
 
 				}
 
-			}
+				System.out.println("vida de " + passivo.getNome() + " = " + passivo.getHp() + "\n");
 
-			System.out.println("vida de " + passivo.getNome() + " = " + passivo.getHp() + "\n");
+				for (Skill skill : criatura.getBuffs()) {
 
-			for (Skill skill : criatura.getBuffs()) {
+					if (skill.getNome().equals(SkillPadrao.ProtegidoPelaLuz().getNome())) {
 
-				if (skill.getNome().equals(SkillPadrao.ProtegidoPelaLuz().getNome())) {
+						System.out.println("\nComo protegido da luz você se cura em 1 de vida\n");
 
-					System.out.println("\nComo protegido da luz você se cura em 1 de vida\n");
+						criatura.vidaGanha(1);
 
+						break;
+
+					}
+
+				}
+				
+				if(criatura.getNomeDaClasse()==ClassConstantes.GUERREIRO) {
+					
+					System.out.println("Você como guerreiro se mantem, você ganhou 1 de vida");
+					
 					criatura.vidaGanha(1);
+					
+				}
+				
+				if(turnos==0) {
 
-					break;
+				setBonus();
+
+				setBonusM();
+
+				executaDebuff();
+				}
+
+				if (passivo.getHp() == 0 && passivo.getNomeRaca().equals(RacaConstantes.MEIO_ORC)) {
+
+					ResistenciaOrc();
 
 				}
 
-			}
+				if (criatura.getNomeDaClasse().equals(ClassConstantes.BRUXO)) {
 
-			setBonus();
-			setBonusM();
-			ExecutaDebuff();
+					passivo.danoRecebido(100);
 
-			if (passivo.getHp() == 0 && passivo.getNomeRaca().equals(RacaConstantes.MEIO_ORC)) {
+				}
 
-				ResistenciaOrc();
+				if (criatura.getNomeDaClasse().equals(ClassConstantes.BRUXO) && passivo.getHp() <= 0) {
 
-			}
+					System.out.println(criatura.getNome() + " você absorve a alma de " + passivo.getNome());
+					criatura.setNmagias(3);
+					criatura.addBuffs(SkillPadrao.Lich(criatura));
+					AddBuffs(criatura);
 
-			if (criatura.getNomeDaClasse().equals(ClassConstantes.BRUXO)) {
+				}
 
-				passivo.danoRecebido(100);
+				if (passivo.getHp() <= 0) {
 
-			}
+					System.out.println(passivo.getNome() + " esta MORTO!!!\n");
 
-			if (criatura.getNomeDaClasse().equals(ClassConstantes.BRUXO) && passivo.getHp() <= 0) {
+					morte();
 
-				System.out.println(criatura.getNome() + " você absorve a alma de " + passivo.getNome());
-				criatura.setNmagias(3);
-				criatura.addBuffs(SkillPadrao.Lich(criatura));
-				AddBuffs(criatura);
-
-			}
-
-			if (passivo.getHp() <= 0) {
-
-				System.out.println(passivo.getNome() + " esta MORTO!!!\n");
-
-				morte();
+				}
+				
+				criaturas.set(jogavel, criatura);
+				
+				proximo();
 
 			}
 
-			if (ativo < criaturas.size() - 1) {
-
-				jogavel++;
-
-			} else {
-
-				jogavel = 0;
-			}
-
-			if (!Fim()) {
+			if (!fim()) {
 
 				for (Criatura criatura : criaturas) {
 
@@ -778,8 +758,16 @@ public class ControladorLuta {
 		String acaoEscolhida;
 
 		List<String> acoes = new ArrayList<>();
+		
+		if(turnos==0) {
 
-		System.out.println("Escolha sua Ação: ");
+		System.out.println("Escolha sua ação: ");
+		
+		}else {
+			
+			System.out.println("Escolha sua segunda acão: ");
+			
+		}
 
 		if (criatura.getAtaquesFisicos() != null) {
 
@@ -835,7 +823,7 @@ public class ControladorLuta {
 
 		case MAGIA2:
 
-			if (criatura.getMagiasPassivas() != null) {
+			if (criatura.getMagiasPassivas().isEmpty()) {
 
 				System.out.println("1 Magia de ataque\n");
 				System.out.println("2 Magia Passiva");
@@ -978,7 +966,7 @@ public class ControladorLuta {
 		return criatura;
 	}
 
-	private void naoBonus(Criatura criatura, Skill skill) {
+	private Criatura naoBonus(Criatura criatura, Skill skill) {
 
 		Boolean ativo = bonusAtivo(skill);
 
@@ -1011,16 +999,50 @@ public class ControladorLuta {
 
 				criatura.setInte(criatura.getInte() - skill.getBonusAtributo());
 			}
-			
-			if(skill==SkillPadrao.Polimorf()) {
-				
-				criatura.setClass(ClassConstantes.DRUIDA);
-				
+
+			if (skill.getNome().equals(SkillPadrao.Polimorf().getNome())) {
+
+				int vida = 0;
+				List<Skill> buffs = new ArrayList<>();
+				List<Magia> buffsM = new ArrayList<>();
+				List<DeBuff> debuffs = new ArrayList<>();
+				boolean AmigoC = criatura.isAmigo();
+				boolean MarcaSolarC = criatura.isMarcaSolar();
+				boolean StunadoC = criatura.isStunado();
+				boolean DesvantagemC = criatura.isDesvantagem();
+
+				switch (criatura.getNomeDaClasse()) {
+
+				case ClassConstantes.JAGUAR:
+					vida = (criatura.getHp());
+					break;
+				case ClassConstantes.COELHO:
+					vida = (criatura.getHp() * 2);
+					break;
+				case ClassConstantes.URSO:
+					vida = (criatura.getHp() / 2);
+					break;
+				}
+
+				System.out.println("Você volta a ser um "+criatura.getNomeRaca()+" com "+criatura.getHp()+" de vida");
+				criatura = FormasHumanas.get(criatura.getNome());
+
+				criatura.setHp(vida);
+				criatura.setBuffs(buffs);
+				criatura.setBuffsM(buffsM);
+				criatura.setDebuffs(debuffs);
+				criatura.setAmigo(AmigoC);
+				criatura.setMarcaSolar(MarcaSolarC);
+				criatura.setStunado(StunadoC);
+				criatura.setDesvantagem(DesvantagemC);
+
 			}
 		}
+
+		return criatura;
 	}
 
-	private void naoBonusM(Criatura criatura, Magia magia) {
+	private Criatura naoBonusM(Criatura criatura, Magia magia) {
 
 		Boolean ativoM = bonusMAtivo(magia);
 
@@ -1032,6 +1054,7 @@ public class ControladorLuta {
 		}
 
 		validaLista(criatura, this.ativo);
+		return criatura;
 
 	}
 
@@ -1266,7 +1289,7 @@ public class ControladorLuta {
 
 	}
 
-	private boolean Fim() {
+	private boolean fim() {
 
 		int nAmigos = 0;
 
@@ -1576,7 +1599,7 @@ public class ControladorLuta {
 
 			Skill skill = criatura.getBuffs().get(i);
 			validaBonus(skill);
-			naoBonus(criatura, skill);
+			criatura = naoBonus(criatura, skill);
 			skills.add(skill);
 
 		}
@@ -1593,7 +1616,7 @@ public class ControladorLuta {
 
 			Magia magia = criatura.getBuffsM().get(i);
 			validaBonusM(magia);
-			naoBonusM(criatura, magia);
+			criatura = naoBonusM(criatura, magia);
 			magias.add(magia);
 
 		}
@@ -1629,7 +1652,7 @@ public class ControladorLuta {
 
 	}
 
-	private void ExecutaDebuff() {
+	private void executaDebuff() {
 
 		List<DeBuff> deBuff1 = criatura.getDebuffs();
 
@@ -1675,7 +1698,7 @@ public class ControladorLuta {
 
 			int problema = rand.nextInt(2);
 
-			System.out.println("Você teve um erro crítico ");
+			System.out.print("\nVocê teve um erro crítico ");
 
 			if (ATAQUE.equals(acao)) {
 
@@ -1811,4 +1834,107 @@ public class ControladorLuta {
 
 	}
 
+	Criatura polimorf(Criatura criatura) {
+
+		for (Skill skil : criatura.getBuffs()) {
+
+			if (ClassConstantes.DRUIDA.equals(criatura.getNomeDaClasse()) && skil.getTime() == 2) {
+
+				Criatura druida = new Criatura(criatura);
+
+				if (criatura.getNomeDaClasse().equals(ClassConstantes.DRUIDA)) {
+
+					FormasHumanas.put(criatura.getNome(), druida);
+
+				}
+
+				System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
+
+				String nomeC = criatura.getNomeDaClasse();
+
+				do {
+
+					int NdeTentativas = 0;
+
+					if (NdeTentativas != 0) {
+
+						System.out.println("1 Jaguar\n2 Coelho\n3 Urso");
+
+						System.out.println("Você já é um " + criatura.getClass() + ", tente outra coisa");
+
+					}
+
+					switch (Uteis.escaneador(3)) {
+
+					case 1:
+						criatura = mudancaDeClasse(criatura,ClassConstantes.JAGUAR);
+						break;
+					case 2:
+						criatura = mudancaDeClasse(criatura, ClassConstantes.COELHO);
+						break;
+					case 3:
+						criatura = mudancaDeClasse(criatura, ClassConstantes.URSO);
+						break;
+					}
+
+					NdeTentativas++;
+
+				} while (criatura.getNomeDaClasse() == nomeC);
+
+				return criatura;
+
+			} else {
+
+				return criatura;
+
+			}
+		}
+		return criatura;
+	}
+
+	private Criatura mudancaDeClasse(Criatura criatura, String animal) {
+
+		int vida = 0;
+
+		criatura.getMagias().clear();
+		criatura.getMagiasPassivas().clear();
+		criatura.getItens().clear();
+		criatura.getSkills().clear();
+		criatura.getBonuses().clear();
+		criatura.getAtaquesFisicos().clear();
+
+		switch (animal) {
+
+		case ClassConstantes.JAGUAR:
+			System.out.println("Você se tranforma em um Jaguar");
+			vida = (criatura.getHp());
+			break;
+		case ClassConstantes.COELHO:
+			System.out.println("Você se tranforma em um Coelho");
+			vida = (criatura.getHp() / 2);
+			break;
+		case ClassConstantes.URSO:
+			System.out.println("Você se tranforma em um Urso");
+			vida = (criatura.getHp() * 2);
+			break;
+		}
+
+		criatura.setClass(animal);
+
+		criatura.setHp(vida);
+
+		return criatura;
+	}
+	
+	private void SurtoDeAcao(Criatura criatura) {
+
+		for (Skill skil : criatura.getBuffs()) {
+
+			if (skil.getNome().equals(SkillPadrao.SurtoDeAcao().getNome())) {
+				
+				NdTurnos++;
+				
+			}
+		}
+	}
 }

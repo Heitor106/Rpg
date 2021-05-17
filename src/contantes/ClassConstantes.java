@@ -14,6 +14,9 @@ public class ClassConstantes {
 	public static final String MONGE = "monge";
 	public static final String PALADINO = "paladino";
 	public static final String PATRULHEIRO = "patrulheiro";
+	public static final String URSO = "urso";
+	public static final String COELHO = "coelho";
+	public static final String JAGUAR = "jaguar";
 	public static final String[] CLASES = { BARBARO, BARDO, BRUXO, CLERIGO, DRUIDA, FEITICEIRO, GUERREIRO,
 			LADINO, MAGO,PALADINO, PATRULHEIRO };
 

@@ -24,12 +24,26 @@ public class MagiaPadrao {
 
 	}
 
-	public static Magia CurarFerimentos() {
+	public static Magia Curar() {
 
 		Magia magia = new Magia();
 
 		magia.setNome("Curara ferimentos");
 		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(1);
+		magia.setCura(true);
+		magia.setEspacoDeMagia(1);
+		magia.setDisparavel(false);
+		return magia;
+
+	}
+	
+	public static Magia CurarFerimentos() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Curara ferimentos");
+		magia.setValorDeDado(DadosConstantes.D4N);
 		magia.setnDdos(1);
 		magia.setCura(true);
 		magia.setEspacoDeMagia(1);
@@ -105,6 +119,22 @@ public class MagiaPadrao {
 		magia.setDisparavel(false);
 		magia.setTipoDeDano(ItensConstates.DANO_M);
 		magia.setDebuff(DeBuffPadrao.sangramento());
+		return magia;
+
+	}
+	
+	public static Magia ChicoteDeVinhas() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Chicote de vinhas");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.Veneno());
 		return magia;
 
 	}
@@ -240,6 +270,23 @@ public class MagiaPadrao {
 
 		magia.setNome("Ilusão");
 		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.CON);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_F);
+		magia.setDebuff(DeBuffPadrao.StunTeste());
+
+		return magia;
+
+	}
+	
+	public static Magia PuloCeCotovelo() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Pulo de Cotovelo");
+		magia.setValorDeDado(DadosConstantes.D4N);
 		magia.setnDdos(1);
 		magia.setEspacoDeMagia(1);
 		magia.setCD(AtributoConstantes.CON);

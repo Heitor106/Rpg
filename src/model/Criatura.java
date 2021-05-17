@@ -21,6 +21,12 @@ public class Criatura extends Class implements Comparable<Criatura> {
 	private boolean stunado = false;
 	
 	private int hp = super.getHp();
+	
+	public Criatura(Criatura criatura) {
+		this(criatura.getNome(),criatura.getNomeRaca(), "", "", criatura.getNomeDaClasse(),criatura.isAmigo());
+		this.hp = criatura.getHp();
+		this.iniciativa = criatura.getIniciativa();
+	}
 
 	public Criatura(String nome, String raca, String clase, boolean amigo) {
 		this(nome, raca, "", "", clase, amigo);
