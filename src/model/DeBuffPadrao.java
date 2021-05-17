@@ -5,13 +5,26 @@ import contantes.DebuffConstantes;
 
 public class DeBuffPadrao {
 
-	static DeBuff debuff;
+	static DeBuff debuff = new DeBuff();
 
 	public static DeBuff emChamas() {
 
 		debuff = new DeBuff();
 
 		debuff.setNome("Chamas");
+		debuff.setDano(1);
+		debuff.setDanoOnHit(2);
+		debuff.setTime(2);
+		debuff.setTipo(DebuffConstantes.VENENO);
+
+		return debuff;
+	}
+	
+	public static DeBuff Veneno() {
+
+		debuff = new DeBuff();
+
+		debuff.setNome("Envenenado");
 		debuff.setDano(1);
 		debuff.setDanoOnHit(2);
 		debuff.setTime(3);

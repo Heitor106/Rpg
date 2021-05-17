@@ -8,6 +8,19 @@ public class SkillPadrao {
 
 	private static Skill skill;
 
+	public static Skill SurtoDeAcao() {
+
+		 skill = new Skill();
+		 
+		 skill.setTime(1);
+		 skill.setNome("Surto de Ação");
+		 skill.setTiposkill(ItensConstates.DANO_F);
+		 skill.setEspacoDeSkill(2);
+		 
+		 return skill;
+
+	}
+	
 	public static Skill Furia() {
 
 		 skill = new Skill();

@@ -160,22 +160,27 @@ public class Class extends Raca {
 
 			break;
 			
+		case ClassConstantes.GUERREIRO:
+			guerreiro();
+
+			break;
+			
 		case ClassConstantes.DRUIDA:
 			Druida();
 
 			break;
 			
-		case "urso":
+		case ClassConstantes.URSO:
 			Urso();
 
 			break;
 			
-		case "jaguar":
+		case ClassConstantes.JAGUAR:
 			jaguar();
 
 			break;
 			
-		case "coelho":
+		case ClassConstantes.COELHO:
 			coelho();
 
 			break;
@@ -229,6 +234,42 @@ public class Class extends Raca {
 		addAquesFisicos(ItemPadrao.Soco());
 
 	}
+	
+	public void guerreiro() {
+
+		nomeDaClasse = ClassConstantes.GUERREIRO;
+
+		hp = super.getHp() + DadosConstantes.D10 + getConMod();
+		Nmagias = 3;
+		atributoPadrao = AtributoConstantes.INT;
+
+		addSkill(SkillPadrao.SurtoDeAcao());
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+		
+		addBonus(BonusPadrao.ArmaduraMedia());
+		
+		addBonus(BonusPadrao.ArmaduraPesada());
+
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		addBonus(BonusPadrao.ArmasMarciais());
+		
+		addBonus(BonusPadrao.escudo());
+		
+		setArmadura(ItemPadrao.ArmaduraDeMalha());
+
+		addItem(ItemPadrao.espadaGrande());
+
+		addItem(ItemPadrao.espadaCurta());
+		
+		addMagia(MagiaPadrao.PuloCeCotovelo());
+
+		addAquesFisicos(ItemPadrao.Soco());
+		
+		addSkill(SkillPadrao.SurtoDeAcao());
+
+	}
 
 	public void bardo() {
 
@@ -250,7 +291,7 @@ public class Class extends Raca {
 
 		addBonus(BonusPadrao.Arcana());
 
-		addItem(ItemPadrao.espadacurta());
+		addItem(ItemPadrao.espadaCurta());
 
 		addItem(ItemPadrao.adaga());
 
@@ -260,7 +301,7 @@ public class Class extends Raca {
 
 		addMagia(MagiaPadrao.somEstridente());
 
-		addMagiaPassiva(MagiaPadrao.CurarFerimentos());
+		addMagiaPassiva(MagiaPadrao.Curar());
 
 		addMagiaPassiva(MagiaPadrao.VitalitadeFalsa());
 
@@ -284,7 +325,7 @@ public class Class extends Raca {
 
 		addItem(ItemPadrao.adaga());
 
-		addItem(ItemPadrao.espadacurta());
+		addItem(ItemPadrao.espadaCurta());
 
 		setArmadura(ItemPadrao.ArmaduraDeCouro());
 
@@ -358,13 +399,17 @@ public class Class extends Raca {
 		
 		addItem(ItemPadrao.cimitarra());
 		
+		addMagiaPassiva(MagiaPadrao.CurarFerimentos());
+		
+		addMagia(MagiaPadrao.ChicoteDeVinhas());
+			
 		addSkill(SkillPadrao.Polimorf());		
 				
 	}
 	
 	public void Urso() {
 
-		nomeDaClasse = "Urso";
+		nomeDaClasse = ClassConstantes.URSO;
 
 		hp = super.getHp() + DadosConstantes.D8*2 + getConMod();
 		Nmagias = 2;
@@ -381,7 +426,7 @@ public class Class extends Raca {
 	
 	public void jaguar() {
 
-		nomeDaClasse = "Jaguar";
+		nomeDaClasse = ClassConstantes.JAGUAR;
 
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 2;
@@ -398,7 +443,7 @@ public class Class extends Raca {
 	
 	public void coelho() {
 
-		nomeDaClasse = "Coelho";
+		nomeDaClasse = ClassConstantes.COELHO;
 
 		hp = super.getHp() + DadosConstantes.D4 + getConMod();
 		Nmagias = 2;

@@ -56,6 +56,7 @@ public class ItemPadrao {
 		
 		return item;
 	}
+
 	
 	public static Item arcoCurto() {
 		
@@ -79,6 +80,22 @@ public class ItemPadrao {
 		
 		item.setNome("Machadão");
 		item.setDadoDeDano(DadosConstantes.D12N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(30);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.STR);
+		item.setMao(ItensConstates.MAO2);
+		item.setTipoItem(ItensConstates.ARMAM);
+		
+		return item;
+	}
+	
+	public static Item espadaGrande() {
+		
+		item=new Item();
+		
+		item.setNome("Espadão");
+		item.setDadoDeDano(DadosConstantes.D10N);
 		item.setTipoDano(ItensConstates.DANO_F);
 		item.setPreco(30);
 		item.setSlot(1);
@@ -152,6 +169,18 @@ public class ItemPadrao {
 		return item;
 	}
 	
+	public static Item ArmaduraDeMalha() {
+		
+		item=new Item();
+		
+		item.setNome("Armadura de Malha");
+		item.setPreco(30);
+		item.setAc(16);
+		item.setTipoItem(ItensConstates.ARMADURAP);
+		
+		return item;
+	}
+	
 	public static Item Saltitante() {
 		
 		item=new Item();
@@ -191,8 +220,8 @@ public class ItemPadrao {
 		
 		return item;
 	}
-
-	public static Item espadacurta() {
+	
+	public static Item espadaCurta() {
 		
 item=new Item();
 		
