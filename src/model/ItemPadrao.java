@@ -61,7 +61,7 @@ public class ItemPadrao {
 		
 		item=new Item();
 		
-		item.setNome("Rapieirra");
+		item.setNome("Rapieira");
 		item.setDadoDeDano(DadosConstantes.D8N);
 		item.setTipoDano(ItensConstates.DANO_F);
 		item.setPreco(25);

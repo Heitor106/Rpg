@@ -8,7 +8,7 @@ public class SkillPadrao {
 
 	private static Skill skill;
 
-	public static Skill SurtoDeAcao() {
+	public static Skill surtoDeAcao() {
 
 		 skill = new Skill();
 		 
@@ -21,7 +21,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Furia() {
+	public static Skill furia() {
 
 		 skill = new Skill();
 		 
@@ -36,7 +36,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Lich(Criatura criatura) {
+	public static Skill lich(Criatura criatura) {
 
 		 skill = new Skill();
 		 skill.setTime(1000);
@@ -50,7 +50,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Inspiração() {
+	public static Skill inspiração() {
 
 		 skill = new Skill();
 		 skill.setTime(100);
@@ -66,7 +66,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Sombras() {
+	public static Skill sombras() {
 
 		 skill = new Skill();
 		 skill.setTime(2);
@@ -78,7 +78,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill LaminaDupla() {
+	public static Skill laminaDupla() {
 
 		 skill = new Skill();
 		 skill.setTime(1);
@@ -91,7 +91,7 @@ public class SkillPadrao {
 	}
 	
 	
-	public static Skill ProtegidoPelaLuz() {
+	public static Skill protegidoPelaLuz() {
 
 		 skill = new Skill();
 		 skill.setTime(4);
@@ -108,7 +108,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Polimorf() {
+	public static Skill polimorf() {
 
 		 skill = new Skill();
 		 skill.setTime(2);

@@ -56,7 +56,7 @@ public class Main {
 	criaturas.add(joao);
 //	criaturas.add(jhoseth);
 	
-	luta.Luta(criaturas);
+	luta.luta(criaturas);
 
 	}
 
