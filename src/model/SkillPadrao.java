@@ -39,10 +39,10 @@ public class SkillPadrao {
 	public static Skill Lich(Criatura criatura) {
 
 		 skill = new Skill();
-		 skill.setTime(3);
+		 skill.setTime(1000);
 		 skill.setBonusDano(2);
 		 skill.setBonusVida(criatura.getChaMod()+4);
-		 skill.setNome("Absolvição de vidas");
+		 skill.setNome("Absolvição de Almas");
 		 skill.setTiposkill(ItensConstates.DANO_M);
 		 skill.setEspacoDeSkill(2);
 		 
@@ -65,6 +65,31 @@ public class SkillPadrao {
 		 return skill;
 
 	}
+	
+	public static Skill Sombras() {
+
+		 skill = new Skill();
+		 skill.setTime(2);
+		 skill.setTiposkill(ItensConstates.DANO_M);
+		 skill.setNome("Mergulho Sombrio");
+		 skill.setEspacoDeSkill(2);
+		 
+		 return skill;
+
+	}
+	
+	public static Skill LaminaDupla() {
+
+		 skill = new Skill();
+		 skill.setTime(1);
+		 skill.setTiposkill(ItensConstates.DANO_M);
+		 skill.setNome("Contra Lâmina");
+		 skill.setEspacoDeSkill(1);
+		 
+		 return skill;
+
+	}
+	
 	
 	public static Skill ProtegidoPelaLuz() {
 

@@ -175,6 +175,11 @@ public class Class extends Raca {
 
 			break;
 			
+		case ClassConstantes.LADINO:
+			ladino();
+
+			break;
+			
 		case ClassConstantes.JAGUAR:
 			jaguar();
 
@@ -269,6 +274,34 @@ public class Class extends Raca {
 		
 		addSkill(SkillPadrao.SurtoDeAcao());
 
+	}
+	
+	public void ladino() {
+
+		nomeDaClasse = ClassConstantes.LADINO;
+
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+		Nmagias = 3;
+		atributoPadrao = AtributoConstantes.INT;
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		addBonus(BonusPadrao.ArmasMarciais());
+			
+		setArmadura(ItemPadrao.ArmaduraDeCouro());
+
+		addItem(ItemPadrao.rapieira());
+
+		addItem(ItemPadrao.adaga());
+		
+		addAquesFisicos(ItemPadrao.Soco());
+		
+		addSkill(SkillPadrao.Sombras());
+		
+		addSkill(SkillPadrao.LaminaDupla());
+		
 	}
 
 	public void bardo() {
