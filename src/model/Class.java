@@ -180,6 +180,11 @@ public class Class extends Raca {
 
 			break;
 			
+		case ClassConstantes.LADINO:
+			ladino();
+
+			break;
+			
 		case ClassConstantes.JAGUAR:
 			jaguar();
 
@@ -220,7 +225,7 @@ public class Class extends Raca {
 
 		setAc(AtributoConstantes.BASE + getDexMod() + getConMod());
 
-		addSkill(SkillPadrao.Furia());
+		addSkill(SkillPadrao.furia());
 
 		addBonus(BonusPadrao.ArmaduraLeve());
 		
@@ -277,7 +282,7 @@ public class Class extends Raca {
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.INT;
 
-		addSkill(SkillPadrao.SurtoDeAcao());
+		addSkill(SkillPadrao.surtoDeAcao());
 
 		addBonus(BonusPadrao.ArmaduraLeve());
 		
@@ -301,8 +306,36 @@ public class Class extends Raca {
 
 		addAquesFisicos(ItemPadrao.Soco());
 		
-		addSkill(SkillPadrao.SurtoDeAcao());
+		addSkill(SkillPadrao.surtoDeAcao());
 
+	}
+	
+	public void ladino() {
+
+		nomeDaClasse = ClassConstantes.LADINO;
+
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+		Nmagias = 3;
+		atributoPadrao = AtributoConstantes.INT;
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		addBonus(BonusPadrao.ArmasMarciais());
+			
+		setArmadura(ItemPadrao.ArmaduraDeCouro());
+
+		addItem(ItemPadrao.rapieira());
+
+		addItem(ItemPadrao.adaga());
+		
+		addAquesFisicos(ItemPadrao.Soco());
+		
+		addSkill(SkillPadrao.sombras());
+		
+		addSkill(SkillPadrao.laminaDupla());
+		
 	}
 
 	public void bardo() {
@@ -315,7 +348,7 @@ public class Class extends Raca {
 		atributoPadrao = AtributoConstantes.CHA;
 		addAquesFisicos(ItemPadrao.Soco());
 
-		addSkill(SkillPadrao.Inspiração());
+		addSkill(SkillPadrao.inspiração());
 
 		addBonus(BonusPadrao.ArmaduraLeve());
 
@@ -406,7 +439,7 @@ public class Class extends Raca {
 		
 		addMagia(MagiaPadrao.MarcaSolar());	
 				
-		addSkill(SkillPadrao.ProtegidoPelaLuz());
+		addSkill(SkillPadrao.protegidoPelaLuz());
 		
 	}
 	
@@ -437,7 +470,7 @@ public class Class extends Raca {
 		
 		addMagia(MagiaPadrao.ChicoteDeVinhas());
 			
-		addSkill(SkillPadrao.Polimorf());		
+		addSkill(SkillPadrao.polimorf());		
 				
 	}
 	

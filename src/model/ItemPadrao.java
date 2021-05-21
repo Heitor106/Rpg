@@ -90,6 +90,22 @@ public class ItemPadrao {
 		
 		return item;
 	}
+	
+	public static Item rapieira() {
+		
+		item=new Item();
+		
+		item.setNome("Rapieira");
+		item.setDadoDeDano(DadosConstantes.D8N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(25);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.DEX);
+		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAM);
+		
+		return item;
+	}
 
 	
 	public static Item arcoCurto() {

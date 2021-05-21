@@ -26,8 +26,8 @@ public class Main {
 //		Criatura personagem2 = criatura.novaCriatura();
 //	    Criatura personagem3 = criatura.novaCriatura();
 //		Criatura personagem4 = criatura.novaCriatura();
-//		Criatura joao = new Criatura("Joao O Cantante", RacaConstantes.MEIO_ELFO, ClassConstantes.BARDO,true);
-		Criatura jonas = new Criatura("Jonas O Terrivel", RacaConstantes.MEIO_ORC, ClassConstantes.GUERREIRO,true);
+		Criatura joao = new Criatura("Joao O Cantante", RacaConstantes.MEIO_ELFO, ClassConstantes.BARDO,true);
+		Criatura jonas = new Criatura("Jonas O Terrivel", RacaConstantes.MEIO_ORC, ClassConstantes.DRUIDA,true);
 //		Criatura jhoseth = new Criatura("Joseth O Sombrio", RacaConstantes.DRACONATO, ClassConstantes.BRUXO,false);
 		Criatura juca = new Criatura("Juca O Illuminado", RacaConstantes.HUMANO, ClassConstantes.MONGE,false);
 //		System.out.println(criaturaP.toString());
@@ -53,10 +53,10 @@ public class Main {
 //	criaturas.add(personagem4);
 	criaturas.add(juca);
 	criaturas.add(jonas);
-//	criaturas.add(joao);
+	criaturas.add(joao);
 //	criaturas.add(jhoseth);
 	
-	luta.Luta(criaturas);
+	luta.luta(criaturas);
 
 	}
 
