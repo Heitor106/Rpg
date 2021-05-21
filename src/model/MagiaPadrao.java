@@ -138,19 +138,37 @@ public class MagiaPadrao {
 		return magia;
 
 	}
-
-	public static Magia ToqueChocante() {
+	
+	public static Magia KiStrugle() {
 
 		Magia magia = new Magia();
 
-		magia.setNome("Toque chocante");
+		magia.setNome("Convulçao Espiritual");
+	
 		magia.setValorDeDado(DadosConstantes.D4N);
 		magia.setnDdos(1);
 		magia.setEspacoDeMagia(0);
-		magia.setCD(AtributoConstantes.DEX);
+		magia.setCD(AtributoConstantes.WIS);
 		magia.setDisparavel(true);
-		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setTipoDeDano(ItensConstates.DANO_F);
 		magia.setDebuff(DeBuffPadrao.StunTeste());
+		return magia;
+
+	}
+
+	public static Magia KiBlocking() {
+		
+		Magia magia = new Magia();
+
+		magia.setNome("Bloqueio de Ki");
+
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.WIS);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_F);
+		magia.setDebuff(DeBuffPadrao.espiritoRompido());
 		return magia;
 
 	}
@@ -314,5 +332,6 @@ public class MagiaPadrao {
 		return magia;
 
 	}
+
 
 }

@@ -170,6 +170,11 @@ public class Class extends Raca {
 
 			break;
 			
+		case ClassConstantes.MONGE:
+			monge();
+
+			break;
+			
 		case ClassConstantes.URSO:
 			Urso();
 
@@ -237,6 +242,35 @@ public class Class extends Raca {
 		addItem(ItemPadrao.machadoMao());
 
 		addAquesFisicos(ItemPadrao.Soco());
+
+	}
+	
+	public void monge() {
+
+		nomeDaClasse = ClassConstantes.MONGE;
+
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+		Nmagias = 4;
+		
+		atributoPadrao = AtributoConstantes.WIS;
+
+		setAc(AtributoConstantes.BASE + getDexMod() + getWisMod());
+
+		addSkill(SkillPadrao.palmaFuriosa());
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+		
+		addBonus(BonusPadrao.ArmaduraMedia());
+
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		addMagia(MagiaPadrao.KiBlocking());
+		
+		addMagia(MagiaPadrao.KiStrugle());
+
+		addItem(ItemPadrao.bastao());
+
+		addAquesFisicos(ItemPadrao.palmaRapida());
 
 	}
 	
