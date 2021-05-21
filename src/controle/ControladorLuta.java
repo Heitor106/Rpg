@@ -333,7 +333,7 @@ public class ControladorLuta {
 
 					} else {
 
-						if (acao == ITEM2 && critical||acao == ATAQUE && critical) {
+						if (acao.equals(ITEM2) && critical||acao.equals( ATAQUE) && critical) {
 
 							System.out.println(criatura.getNome() + " você acertou um CRÍTICO !!!!");
 
