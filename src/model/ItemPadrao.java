@@ -41,6 +41,40 @@ public class ItemPadrao {
 		return item;
 	}
 	
+	public static Item bastao() {
+		
+		item=new Item();
+		
+		item.setNome("Bastão");
+		item.setDadoDeDano(DadosConstantes.D8N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(2);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.DEX);
+		item.setMao(ItensConstates.MAO2);
+		item.setTipoItem(ItensConstates.ARMAS);
+		
+		return item;
+	}
+	
+	public static Item palmaRapida() {
+		
+		item=new Item();
+		
+		item.setNome("Palma Rapida");
+		item.setDadoDeDano(DadosConstantes.D4N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(2);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.DEX);
+		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAS);
+		
+		return item;
+		
+		
+	}
+	
 	public static Item cimitarra() {
 		
 		item=new Item();

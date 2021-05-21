@@ -113,7 +113,6 @@ public class Raca extends Atributo {
 
 		setDex(getDex() + 4);
 		setInte(getInte() + 2);
-		magiasR.add(MagiaPadrao.ToqueChocante());
 		addBonusR(BonusPadrao.ArmasSimples());
 	}
 
@@ -188,7 +187,7 @@ public class Raca extends Atributo {
 
 		setInte(getInte() + 4);
 		setDex(getDex() + 2);
-		magiasR.add(MagiaPadrao.ToqueChocante());
+		magiasR.add(MagiaPadrao.Ilusão());
 	}
 	
 	public void gnomoR() {

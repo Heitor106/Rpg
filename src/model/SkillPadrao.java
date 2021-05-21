@@ -21,6 +21,19 @@ public class SkillPadrao {
 
 	}
 	
+	public static Skill palmaFuriosa() {
+
+		 skill = new Skill();
+		 
+		 skill.setTime(1);
+		 skill.setNome("Palmas furiosas");
+		 skill.setTiposkill(ItensConstates.DANO_F);
+		 skill.setEspacoDeSkill(1);
+		 
+		 return skill;
+
+	}
+	
 	public static Skill Furia() {
 
 		 skill = new Skill();

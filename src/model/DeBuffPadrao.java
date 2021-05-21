@@ -80,6 +80,19 @@ public class DeBuffPadrao {
 		return debuff;
 	}
 	
+	public static DeBuff espiritoRompido() {
+
+		debuff = new DeBuff();
+
+		debuff.setNome("Espirito Rompido");
+		debuff.setDano(1);
+		debuff.setDanoOnHit(1);
+		debuff.setTime(2);
+		debuff.setTipo(DebuffConstantes.ESPIRITO);
+
+		return debuff;
+	}
+	
 	public static DeBuff marcaSolar() {
 
 		debuff = new DeBuff();

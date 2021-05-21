@@ -89,9 +89,9 @@ public class ControladorLuta {
 
 			ativo = jogavel;
 
-			critical = true;
+			critical = false;
 
-			erroCritico0 = true;
+			erroCritico0 = false;
 
 			criatura = criaturas.get(ativo);
 
@@ -125,6 +125,8 @@ public class ControladorLuta {
 					polimorf(criatura);
 					
 					SurtoDeAcao(criatura);
+					
+					palmasFuriosas(criatura);
 
 					acaoNome = selecionador20();
 
@@ -191,8 +193,7 @@ public class ControladorLuta {
 
 					if (dadoDeAtaque2 != dadoDeAtaque) {
 
-						System.out
-								.println("Jogador " + criatura.getNome() + "seu novo dado é: " + dadoDeAtaque2 + "\n");
+						System.out.println("Jogador " + criatura.getNome() + "seu novo dado é: " + dadoDeAtaque2 + "\n");
 						dadoDeAtaque = dadoDeAtaque2;
 
 					}
@@ -352,7 +353,17 @@ public class ControladorLuta {
 						}
 
 						passivo.danoRecebido(dano);
-
+						
+						if(criatura.getNomeDaClasse().equals(ClassConstantes.MONGE)&&NdTurnos==0){
+							
+							NdTurnos=2;
+							
+						}else if(criatura.getNomeDaClasse().equals(ClassConstantes.MONGE)&&NdTurnos==1) {
+							
+							NdTurnos=3;
+							
+						}
+						
 						if (acao == ITEM2 || acao == ATAQUE) {
 
 							validaDeBuffI();
@@ -759,35 +770,34 @@ public class ControladorLuta {
 
 		List<String> acoes = new ArrayList<>();
 		
-		if(turnos==0) {
-
-		System.out.println("Escolha sua ação: ");
+		System.out.println("\nEscolha sua "+turnos+1+" ação:");
 		
-		}else {
-			
-			System.out.println("Escolha sua segunda acão: ");
-			
-		}
-
 		if (criatura.getAtaquesFisicos() != null) {
 
 			acoes.add(ATAQUE);
 
 		}
 
-		if (criatura.getItens() != null) {
+		if (criatura.getItens() != null && turnos<3) {
 
 			acoes.add(ITEM2);
 
 		}
 
-		if (criatura.getMagias() != null && magiaUtil() || criatura.getMagiasPassivas() != null && magiaPassivaUtil()) {
+		if ((criatura.getMagias() != null && magiaUtil() || criatura.getMagiasPassivas() != null && magiaPassivaUtil())
+				&& !criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) && isBlocked(criatura)) {
+
+			acoes.add(MAGIA2);
+
+		}
+		
+		if (criatura.getMagias() != null && magiaUtil() && turnos==3) {
 
 			acoes.add(MAGIA2);
 
 		}
 
-		if (criatura.getSkills() != null && !SKILL.equals(acao) && skillUtil()) {
+		if (criatura.getSkills() != null && !SKILL.equals(acao) && skillUtil()&& turnos<3) {
 
 			acoes.add(SKILL);
 
@@ -1932,9 +1942,36 @@ public class ControladorLuta {
 
 			if (skil.getNome().equals(SkillPadrao.SurtoDeAcao().getNome())) {
 				
-				NdTurnos++;
+				NdTurnos=2;
 				
 			}
 		}
+	}
+	
+	private void palmasFuriosas(Criatura criatura) {
+
+		for (Skill skil : criatura.getBuffs()) {
+
+			if (skil.getNome().equals(SkillPadrao.palmaFuriosa().getNome())) {
+				
+				NdTurnos=3;
+				
+			}
+		}
+	}
+	
+	private boolean isBlocked(Criatura criatura) {
+		
+		for(int  i = 0; i<criatura.getDebuffs().size(); i++) {
+			
+			if(criatura.getDebuffs().get(i).getNome().equals(DebuffConstantes.BLOCKED)) {
+				
+				return false;
+				
+			}
+			
+		}
+		
+		return true;
 	}
 }
