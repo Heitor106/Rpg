@@ -8,7 +8,7 @@ public class SkillPadrao {
 
 	private static Skill skill;
 
-	public static Skill SurtoDeAcao() {
+	public static Skill surtoDeAcao() {
 
 		 skill = new Skill();
 		 
@@ -21,7 +21,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Furia() {
+	public static Skill furia() {
 
 		 skill = new Skill();
 		 
@@ -36,13 +36,13 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Lich(Criatura criatura) {
+	public static Skill lich(Criatura criatura) {
 
 		 skill = new Skill();
-		 skill.setTime(3);
+		 skill.setTime(1000);
 		 skill.setBonusDano(2);
 		 skill.setBonusVida(criatura.getChaMod()+4);
-		 skill.setNome("Absolvição de vidas");
+		 skill.setNome("Absolvição de Almas");
 		 skill.setTiposkill(ItensConstates.DANO_M);
 		 skill.setEspacoDeSkill(2);
 		 
@@ -50,7 +50,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Inspiração() {
+	public static Skill inspiração() {
 
 		 skill = new Skill();
 		 skill.setTime(100);
@@ -66,7 +66,32 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill ProtegidoPelaLuz() {
+	public static Skill sombras() {
+
+		 skill = new Skill();
+		 skill.setTime(2);
+		 skill.setTiposkill(ItensConstates.DANO_M);
+		 skill.setNome("Mergulho Sombrio");
+		 skill.setEspacoDeSkill(2);
+		 
+		 return skill;
+
+	}
+	
+	public static Skill laminaDupla() {
+
+		 skill = new Skill();
+		 skill.setTime(1);
+		 skill.setTiposkill(ItensConstates.DANO_M);
+		 skill.setNome("Contra Lâmina");
+		 skill.setEspacoDeSkill(1);
+		 
+		 return skill;
+
+	}
+	
+	
+	public static Skill protegidoPelaLuz() {
 
 		 skill = new Skill();
 		 skill.setTime(4);
@@ -83,7 +108,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Polimorf() {
+	public static Skill polimorf() {
 
 		 skill = new Skill();
 		 skill.setTime(2);
