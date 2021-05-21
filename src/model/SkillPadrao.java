@@ -21,7 +21,6 @@ public class SkillPadrao {
 
 	}
 	
-<<<<<<< HEAD
 	public static Skill palmaFuriosa() {
 
 		 skill = new Skill();
@@ -35,10 +34,7 @@ public class SkillPadrao {
 
 	}
 	
-	public static Skill Furia() {
-=======
 	public static Skill furia() {
->>>>>>> 1ca4afae5f0cb5e951f75e0bf4249e54def4c327
 
 		 skill = new Skill();
 		 
