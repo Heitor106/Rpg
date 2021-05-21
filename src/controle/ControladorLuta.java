@@ -90,10 +90,6 @@ public class ControladorLuta {
 
 			ativo = jogavel;
 
-			critical = false;
-
-			erroCritico0 = false;
-
 			criatura = criaturas.get(ativo);
 
 			System.out.println(criatura.getNome());
@@ -110,6 +106,10 @@ public class ControladorLuta {
 			}
 
 			for (turnos = 0; turnos < nDeTurnos; turnos++) {
+				
+				critical = false;
+				
+				erroCritico0 = false;
 
 				String acaoNome = selecionador20();
 
@@ -496,7 +496,7 @@ public class ControladorLuta {
 
 				}
 
-				if (criatura.getHp() <= 0) {
+				if (criatura.getHp() <= 0 && !criatura.equals(passivo)) {
 
 					System.out.println("\n O contra ataque é forte de mais e mata");
 					System.out.println(criatura.getNome() + " esta MORTO!!!");
@@ -839,7 +839,7 @@ public class ControladorLuta {
 
 		}
 
-		if (criatura.getItens() != null && turnos < 2) {
+		if (criatura.getItens() != null && turnos < 1 || criatura.getNomeDaClasse().equals(ClassConstantes.GUERREIRO)) {
 
 			acoes.add(ITEM2);
 
@@ -1800,7 +1800,7 @@ public class ControladorLuta {
 
 	private void proximo() {
 
-		if (ativo < criaturas.size() - 1) {
+		if (jogavel< criaturas.size() - 1) {
 
 			jogavel++;
 
