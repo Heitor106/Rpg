@@ -770,7 +770,7 @@ public class ControladorLuta {
 
 		List<String> acoes = new ArrayList<>();
 		
-		System.out.println("\nEscolha sua "+turnos+1+" ação:");
+		System.out.println("\nEscolha sua "+(turnos+1)+" ação:");
 		
 		if (criatura.getAtaquesFisicos() != null) {
 
@@ -778,7 +778,7 @@ public class ControladorLuta {
 
 		}
 
-		if (criatura.getItens() != null && turnos<3) {
+		if (criatura.getItens() != null && turnos<2) {
 
 			acoes.add(ITEM2);
 
@@ -791,13 +791,14 @@ public class ControladorLuta {
 
 		}
 		
-		if (criatura.getMagias() != null && magiaUtil() && turnos==3) {
+		if (criatura.getMagias() != null && magiaUtil() && turnos==1 
+				&& criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) ) {
 
 			acoes.add(MAGIA2);
 
 		}
 
-		if (criatura.getSkills() != null && !SKILL.equals(acao) && skillUtil()&& turnos<3) {
+		if (criatura.getSkills() != null && !SKILL.equals(acao) && skillUtil()&& turnos<1) {
 
 			acoes.add(SKILL);
 
@@ -1402,7 +1403,7 @@ public class ControladorLuta {
 	}
 
 	private Magia validaBonusM(Magia magia) {
-
+	
 		if (magia != null && magia.getTime() > 0) {
 
 			magia.setTime(magia.getTime() - 1);
@@ -1587,19 +1588,6 @@ public class ControladorLuta {
 		return bonus;
 	}
 
-//	private void setBonus(Skill skill) {
-//
-//		if(criatura.getBuffs().get(1)==null) {
-//						
-//			criatura.addBuffs(skill);
-//			
-//		} else if (criatura.getBuffs().get(1)!= null) {
-//			
-//			
-//			
-//		}
-//		
-//	}
 
 	private void setBonus() {
 
@@ -1942,7 +1930,7 @@ public class ControladorLuta {
 
 			if (skil.getNome().equals(SkillPadrao.SurtoDeAcao().getNome())) {
 				
-				NdTurnos=2;
+				NdTurnos++;
 				
 			}
 		}
@@ -1954,8 +1942,8 @@ public class ControladorLuta {
 
 			if (skil.getNome().equals(SkillPadrao.palmaFuriosa().getNome())) {
 				
-				NdTurnos=3;
-				
+				NdTurnos++;
+				NdTurnos++;
 			}
 		}
 	}
