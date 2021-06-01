@@ -51,6 +51,20 @@ public class MagiaPadrao {
 		return magia;
 
 	}
+	
+	public static Magia CuraDaLuz() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Cura da Luz");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setCura(true);
+		magia.setEspacoDeMagia(0);
+		magia.setDisparavel(false);
+		return magia;
+
+	}
 
 	public static Magia CuraSagrada() {
 
@@ -102,6 +116,48 @@ public class MagiaPadrao {
 		magia.setEspacoDeMagia(0);
 		magia.setCD(AtributoConstantes.DEX);
 		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+	
+	public static Magia EnergiaPura() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Energia Pura");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(2);
+		magia.setEspacoDeMagia(3);
+		magia.setAlvosmultiplos(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+	
+	public static Magia FocoEnergético() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Foco energético");
+		magia.setValorDeDado(DadosConstantes.D12N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+	
+	public static Magia misseisMagicos() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Misseis mágicos");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setAlvosN(3);
+		magia.setDisparavel(true);
 		magia.setTipoDeDano(ItensConstates.DANO_M);
 		return magia;
 
@@ -218,6 +274,49 @@ public class MagiaPadrao {
 		return magia;
 
 	}
+	
+	public static Magia ProgétilGêmio() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Progétil gêmio");
+		magia.setValorDeDado(DadosConstantes.D8N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setAlvosN(2);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+	
+	public static Magia tiroMágico() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Tiro energético");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(0);
+		magia.setEspacoDeMagia(0);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
+	
+	public static Magia raioDivino() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Julgamento divino");
+		magia.setValorDeDado(DadosConstantes.D8N);
+		magia.setnDdos(2);
+		magia.setEspacoDeMagia(2);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		return magia;
+
+	}
 
 	public static Magia RajadaMisticaF() {
 
@@ -315,6 +414,24 @@ public class MagiaPadrao {
 		return magia;
 
 	}
+	
+	public static Magia explosaoRevelante() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Explosão revelante");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.CHA);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.StunTeste());
+
+		return magia;
+
+	}
+	
 	
 	public static Magia Encantado() {
 

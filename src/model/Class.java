@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import contantes.AtributoConstantes;
@@ -23,6 +25,7 @@ public class Class extends Raca {
 	private Map<String, Item> ataquesFisicos = new HashMap<>();
 	private Map<String, Magia> magiasPassivas = new HashMap<>();
 	private int CDTR = 8 + ModPadrao() + 2;
+	
 
 	public String getAtributoPadrao() {
 		return atributoPadrao;
@@ -175,15 +178,26 @@ public class Class extends Raca {
 
 			break;
 			
-		case ClassConstantes.URSO:
-			Urso();
+		case ClassConstantes.PALADINO:
+			paladino();
 
 			break;
 			
 		case ClassConstantes.LADINO:
 			ladino();
+			
+			break;
+			
+		case ClassConstantes.MAGO:
+			mago();
+			
+			break;
+			
+		case ClassConstantes.URSO:
+			Urso();
 
 			break;
+			
 			
 		case ClassConstantes.JAGUAR:
 			jaguar();
@@ -309,6 +323,42 @@ public class Class extends Raca {
 		addSkill(SkillPadrao.surtoDeAcao());
 
 	}
+		
+	public void paladino() {
+
+		nomeDaClasse = ClassConstantes.PALADINO;
+
+		hp = super.getHp() + DadosConstantes.D10 + getConMod();
+		Nmagias = 3;
+		atributoPadrao = AtributoConstantes.WIS;
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+		
+		addBonus(BonusPadrao.ArmaduraMedia());
+		
+		addBonus(BonusPadrao.ArmaduraPesada());
+
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		addBonus(BonusPadrao.ArmasMarciais());
+		
+		addBonus(BonusPadrao.escudo());
+		
+		setArmadura(ItemPadrao.ArmaduraDeMalha());
+		
+		setEscudos(ItemPadrao.Escudosimples());
+
+		addItem(ItemPadrao.espadaSagrada());
+		
+		addMagiaPassiva(MagiaPadrao.CuraDaLuz());
+		
+		addMagia(MagiaPadrao.raioDivino());
+
+		addAquesFisicos(ItemPadrao.Soco());
+		
+		addSkill(SkillPadrao.RespeitoDivino());
+
+	}
 	
 	public void ladino() {
 
@@ -373,6 +423,45 @@ public class Class extends Raca {
 		addMagiaPassiva(MagiaPadrao.VitalitadeFalsa());
 
 		addMagiaPassiva(MagiaPadrao.ArmaduraDeNotas());
+	}
+	
+	public void mago() {
+
+		nomeDaClasse = ClassConstantes.MAGO;
+
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+				
+		Nmagias = 6;
+		atributoPadrao = AtributoConstantes.INT;
+		
+		addAquesFisicos(ItemPadrao.Soco());
+
+		addSkill(SkillPadrao.inspiração());
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+
+		addBonus(BonusPadrao.Instrumento());
+
+		addBonus(BonusPadrao.ArmasSimples());
+
+		addBonus(BonusPadrao.Arcana());
+		
+		addSkill(SkillPadrao.SustentoM());
+		
+		addMagia(MagiaPadrao.FocoEnergético());
+		
+		addMagia(MagiaPadrao.ProgétilGêmio());
+		
+		addMagia(MagiaPadrao.tiroMágico());
+		
+		addMagia(MagiaPadrao.EnergiaPura());
+		
+		addMagia(MagiaPadrao.explosaoRevelante());
+		
+		addMagia(MagiaPadrao.misseisMagicos());
+
+		addItem(ItemPadrao.adaga());
+
 	}
 
 	public void bruxo() {
