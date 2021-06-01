@@ -75,6 +75,23 @@ public class ItemPadrao {
 		
 	}
 	
+	public static Item espadaSagrada() {
+		
+		item=new Item();
+		
+		item.setNome("Espada Sagrada");
+		item.setDadoDeDano(DadosConstantes.D8N);
+		item.setTipoDano(ItensConstates.DANO_M);
+		item.setPreco(20);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.STR);
+		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAM);
+		
+		return item;
+
+	}
+	
 	public static Item cimitarra() {
 		
 		item=new Item();
@@ -273,7 +290,7 @@ public class ItemPadrao {
 	
 	public static Item espadaCurta() {
 		
-item=new Item();
+		item=new Item();
 		
 		item.setNome("Espada curta");
 		item.setDadoDeDano(DadosConstantes.D6N);

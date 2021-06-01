@@ -12,6 +12,8 @@ public class Criatura extends Class implements Comparable<Criatura> {
 
 	private String nome;
 	private int iniciativa;
+	private List<String>Ataquei = new ArrayList<>();
+	private List<String>meAtacaaram = new ArrayList<>();
 	private List < Skill > buffs = new ArrayList();
 	private List < Magia> buffsM = new ArrayList();
 	private List <DeBuff> debuffs= new ArrayList();
@@ -22,6 +24,7 @@ public class Criatura extends Class implements Comparable<Criatura> {
 	
 	private int hp = super.getHp();
 	
+
 	public Criatura(Criatura criatura) {
 		this(criatura.getNome(),criatura.getNomeRaca(), "", "", criatura.getNomeDaClasse(),criatura.isAmigo());
 		this.hp = criatura.getHp();
@@ -198,6 +201,22 @@ public class Criatura extends Class implements Comparable<Criatura> {
 
 	public void setDebuffs(List<DeBuff> debuffs) {
 		this.debuffs = debuffs;
+	}
+	
+	public List<String> getAtaquei() {
+		return Ataquei;
+	}
+
+	public void setAtaquei(List<String> ataquei) {
+		Ataquei = ataquei;
+	}
+
+	public List<String> getMeAtacaaram() {
+		return meAtacaaram;
+	}
+
+	public void setMeAtacaaram(List<String> meAtacaaram) {
+		this.meAtacaaram = meAtacaaram;
 	}
 
 	public String toString() {

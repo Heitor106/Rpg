@@ -26,10 +26,10 @@ public class Main {
 //		Criatura personagem2 = criatura.novaCriatura();
 //	    Criatura personagem3 = criatura.novaCriatura();
 //		Criatura personagem4 = criatura.novaCriatura();
-		Criatura joao = new Criatura("Joao O Cantante", RacaConstantes.MEIO_ELFO, ClassConstantes.BARDO,true);
-//		Criatura jonas = new Criatura("Jonas O Terrivel", RacaConstantes.MEIO_ORC, ClassConstantes.DRUIDA,true);
+		Criatura joao = new Criatura("Joao O Cantante", RacaConstantes.MEIO_ELFO, ClassConstantes.MAGO,true);
+//		Criatura jonas = new Criatura("Jonas O Terrivel", RacaConstantes.MEIO_ORC, ClassConstantes.DRUIDA,false);
 //		Criatura jhoseth = new Criatura("Joseth O Sombrio", RacaConstantes.DRACONATO, ClassConstantes.BRUXO,false);
-		Criatura juca = new Criatura("Juca O Illuminado", RacaConstantes.HUMANO, ClassConstantes.MONGE,false);
+		Criatura juca = new Criatura("Juca O Illuminado", RacaConstantes.HUMANO, ClassConstantes.PALADINO,false);
 //		System.out.println(criaturaP.toString());
 
 //		for (Map.Entry<String, Bonus> bonus : criaturaP.getBonuses().entrySet()) {

@@ -17,9 +17,25 @@ public class Magia {
 	private int bonusMAC;
 	private int bonusMHP;
 	private DeBuff debuff;
-	
-	
-	
+	private boolean alvosmultiplos = false;
+	private int alvosN = 1;
+		
+	public boolean isAlvosmultiplos() {
+		return alvosmultiplos;
+	}
+
+	public void setAlvosmultiplos(boolean alvosmultiplos) {
+		this.alvosmultiplos = alvosmultiplos;
+	}
+
+	public int getAlvosN() {
+		return alvosN;
+	}
+
+	public void setAlvosN(int alvosN) {
+		this.alvosN = alvosN;
+	}
+
 	public DeBuff getDebuff() {
 		return debuff;
 	}

@@ -39,10 +39,25 @@ public class SkillPadrao {
 		 skill = new Skill();
 		 
 		 skill.setTime(3);
+		 skill.setBonusVida(4);
 		 skill.setBonusDano(3);
 		 skill.setBonusAc(4);
 		 skill.setNome("Furia");
 		 skill.setTiposkill(ItensConstates.DANO_F);
+		 skill.setEspacoDeSkill(2);
+		 
+		 return skill;
+
+	}
+	
+	public static Skill SustentoM() {
+
+		 skill = new Skill();
+		 
+		 skill.setTime(1);
+		 skill.setBonusVida(4);
+		 skill.setNome("Sustento Mágico");
+		 skill.setTiposkill(ItensConstates.DANO_M);
 		 skill.setEspacoDeSkill(2);
 		 
 		 return skill;
@@ -98,6 +113,21 @@ public class SkillPadrao {
 		 skill.setTiposkill(ItensConstates.DANO_M);
 		 skill.setNome("Contra Lâmina");
 		 skill.setEspacoDeSkill(1);
+		 
+		 return skill;
+
+	}
+	
+	
+	public static Skill RespeitoDivino() {
+
+		 skill = new Skill();
+		 skill.setTime(1);
+		 skill.setBonusVida(5);
+		 skill.setBonusAtributo(3);
+		 skill.setTiposkill(ItensConstates.DANO_M);
+		 skill.setNome("Asas angelicais");
+		 skill.setEspacoDeSkill(2);
 		 
 		 return skill;
 
