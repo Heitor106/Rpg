@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,52 +12,42 @@ import controle.ControladorCriatura;
 import controle.ControladorLuta;
 import model.Bonus;
 import model.Criatura;
+import model.Item;
 import model.ItemPadrao;
 import model.Monstro;
 import model.MonstroPadrao;
 
-
 public class Main {
 
 	public static void main(String[] args) {
-		
-		ControladorCriatura criatura= new ControladorCriatura();		
 
-//		Criatura personagem1 = criatura.novaCriatura();
-//		Criatura personagem2 = criatura.novaCriatura();
-//	    Criatura personagem3 = criatura.novaCriatura();
-//		Criatura personagem4 = criatura.novaCriatura();
-		Criatura joao = new Criatura("Joao O Cantante", RacaConstantes.MEIO_ELFO, ClassConstantes.MAGO,true);
+		ControladorCriatura criatura = new ControladorCriatura();
+
+		Criatura joao = new Criatura("Joao O Cantante", RacaConstantes.MEIO_ELFO, ClassConstantes.MAGO, true);
 //		Criatura jonas = new Criatura("Jonas O Terrivel", RacaConstantes.MEIO_ORC, ClassConstantes.DRUIDA,false);
 //		Criatura jhoseth = new Criatura("Joseth O Sombrio", RacaConstantes.DRACONATO, ClassConstantes.BRUXO,false);
-		Criatura juca = new Criatura("Juca O Illuminado", RacaConstantes.HUMANO, ClassConstantes.PALADINO,false);
-//		System.out.println(criaturaP.toString());
+		Criatura juca = new Criatura("Juca O Illuminado", RacaConstantes.HUMANO, ClassConstantes.PATRULHEIRO, false);
 
-//		for (Map.Entry<String, Bonus> bonus : criaturaP.getBonuses().entrySet()) {
-//
-//			System.out.println(bonus.toString());
-//					
-//		}
-			
-	Monstro gobling= MonstroPadrao.gobling();
-	
-//	System.out.println(gobling.getNome());
-//	System.out.println(gobling.toString());
-	
-	ControladorLuta luta = new ControladorLuta();
-	
-	List<Criatura> criaturas = new ArrayList();
-	
-//	criaturas.add(personagem1);
-//	criaturas.add(personagem2);
-//	criaturas.add(personagem3);
-//	criaturas.add(personagem4);
-	criaturas.add(juca);
-//	criaturas.add(jonas);
-	criaturas.add(joao);
-//	criaturas.add(jhoseth);
-	
-	luta.luta(criaturas);
+		Monstro gobling = MonstroPadrao.gobling();
+
+//		System.out.println(gobling.getNome());
+//		System.out.println(gobling.toString());
+
+		ControladorLuta luta = new ControladorLuta();
+
+		List<Criatura> criaturas = new ArrayList();
+		List<Criatura> criaturasMortas = new ArrayList();
+		List<Criatura> fugiram = new ArrayList();
+		List<Item> chao = new ArrayList();
+
+		criaturas.add(juca);
+//		criaturas.add(jonas);
+		criaturas.add(joao);
+//		criaturas.add(jhoseth);
+
+		criaturas = luta.luta(criaturas, chao, fugiram, criaturasMortas);
+		
+		
 
 	}
 

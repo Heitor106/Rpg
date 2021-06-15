@@ -18,6 +18,7 @@ public class Class extends Raca {
 	private String atributoPadrao = "";
 	private Item armadura;
 	private Item escudos;
+	private String fonteDePoder;
 	private Map<String, Magia> magias = new HashMap<>();
 	private Map<String, Skill> skills = new HashMap<>();
 	private Map<String, Bonus> bonuses = new HashMap<>();
@@ -188,6 +189,11 @@ public class Class extends Raca {
 			
 			break;
 			
+		case ClassConstantes.PATRULHEIRO:
+			Patrulheiro();
+			
+			break;
+						
 		case ClassConstantes.MAGO:
 			mago();
 			
@@ -212,6 +218,15 @@ public class Class extends Raca {
 		}
 
 	}
+	
+
+	public String getFonteDePoder() {
+		return fonteDePoder;
+	}
+
+	public void setFonteDePoder(String fonteDePoder) {
+		this.fonteDePoder = fonteDePoder;
+	}
 
 	public Map<String, Magia> getMagiasPassivas() {
 		return magiasPassivas;
@@ -232,10 +247,10 @@ public class Class extends Raca {
 	public void barbaro() {
 
 		nomeDaClasse = ClassConstantes.BARBARO;
-
 		hp = super.getHp() + DadosConstantes.D12 + getConMod();
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.WIS;
+		fonteDePoder = "Ódio";
 
 		setAc(AtributoConstantes.BASE + getDexMod() + getConMod());
 
@@ -262,12 +277,11 @@ public class Class extends Raca {
 	public void monge() {
 
 		nomeDaClasse = ClassConstantes.MONGE;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 4;
-		
 		atributoPadrao = AtributoConstantes.WIS;
-
+		fonteDePoder = "pontos de Ki";
+		
 		setAc(AtributoConstantes.BASE + getDexMod() + getWisMod());
 
 		addSkill(SkillPadrao.palmaFuriosa());
@@ -281,6 +295,8 @@ public class Class extends Raca {
 		addMagia(MagiaPadrao.KiBlocking());
 		
 		addMagia(MagiaPadrao.KiStrugle());
+		
+		addMagiaPassiva(MagiaPadrao.Meditação());
 
 		addItem(ItemPadrao.bastao());
 
@@ -288,13 +304,43 @@ public class Class extends Raca {
 
 	}
 	
+	public void Patrulheiro() {
+
+		nomeDaClasse = ClassConstantes.PATRULHEIRO;
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();
+		Nmagias = 4;
+		atributoPadrao = AtributoConstantes.WIS;
+		fonteDePoder = "flechas mágicas";
+
+		addBonus(BonusPadrao.ArmaduraLeve());
+		
+		addBonus(BonusPadrao.ArmaduraMedia());
+		
+		addBonus(BonusPadrao.ArmasSimples());
+		
+		addBonus(BonusPadrao.ArmasMarciais());
+		
+		setArmadura(ItemPadrao.ArmaduraDeCarapaca());
+
+		addItem(ItemPadrao.ArcoDeJhin());
+		
+		addMagia(MagiaPadrao.ShurikenCortante());
+		
+		addMagiaPassiva(MagiaPadrao.CapusInvisivel());
+
+		addAquesFisicos(ItemPadrao.Soco());
+		
+		addSkill(SkillPadrao.flechasGemias());
+
+	}
+	
 	public void guerreiro() {
 
 		nomeDaClasse = ClassConstantes.GUERREIRO;
-
 		hp = super.getHp() + DadosConstantes.D10 + getConMod();
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.INT;
+		fonteDePoder = "manobras";
 
 		addSkill(SkillPadrao.surtoDeAcao());
 
@@ -327,10 +373,10 @@ public class Class extends Raca {
 	public void paladino() {
 
 		nomeDaClasse = ClassConstantes.PALADINO;
-
 		hp = super.getHp() + DadosConstantes.D10 + getConMod();
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.WIS;
+		fonteDePoder = "magias";
 
 		addBonus(BonusPadrao.ArmaduraLeve());
 		
@@ -352,8 +398,6 @@ public class Class extends Raca {
 		
 		addMagiaPassiva(MagiaPadrao.CuraDaLuz());
 		
-		addMagia(MagiaPadrao.raioDivino());
-
 		addAquesFisicos(ItemPadrao.Soco());
 		
 		addSkill(SkillPadrao.RespeitoDivino());
@@ -363,7 +407,6 @@ public class Class extends Raca {
 	public void ladino() {
 
 		nomeDaClasse = ClassConstantes.LADINO;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.INT;
@@ -391,11 +434,11 @@ public class Class extends Raca {
 	public void bardo() {
 
 		nomeDaClasse = ClassConstantes.BARDO;
-
-		hp = super.getHp() + DadosConstantes.D8 + getConMod();
-				
+		hp = super.getHp() + DadosConstantes.D8 + getConMod();			
 		Nmagias = 4;
 		atributoPadrao = AtributoConstantes.CHA;
+		fonteDePoder = "musicas";
+		
 		addAquesFisicos(ItemPadrao.Soco());
 
 		addSkill(SkillPadrao.inspiração());
@@ -428,15 +471,12 @@ public class Class extends Raca {
 	public void mago() {
 
 		nomeDaClasse = ClassConstantes.MAGO;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
-				
-		Nmagias = 6;
+		Nmagias = 8;
 		atributoPadrao = AtributoConstantes.INT;
+		fonteDePoder = "pontos de poder";
 		
 		addAquesFisicos(ItemPadrao.Soco());
-
-		addSkill(SkillPadrao.inspiração());
 
 		addBonus(BonusPadrao.ArmaduraLeve());
 
@@ -467,10 +507,11 @@ public class Class extends Raca {
 	public void bruxo() {
 
 		nomeDaClasse = ClassConstantes.BRUXO;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 3;
 		atributoPadrao = AtributoConstantes.CHA;
+		fonteDePoder = "sacrfícios";
+		
 		addAquesFisicos(ItemPadrao.Soco());
 
 		addBonus(BonusPadrao.ArmaduraLeve());
@@ -498,10 +539,11 @@ public class Class extends Raca {
 	public void clerigo() {
 
 		nomeDaClasse = ClassConstantes.CLERIGO;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 4;
 		atributoPadrao = AtributoConstantes.WIS;
+		fonteDePoder = "pedidos divinos";
+		
 		addAquesFisicos(ItemPadrao.Soco());
 		
 		addBonus(BonusPadrao.ArmaduraLeve());
@@ -535,10 +577,11 @@ public class Class extends Raca {
 	public void Druida() {
 
 		nomeDaClasse = ClassConstantes.DRUIDA;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 5;
 		atributoPadrao = AtributoConstantes.WIS;
+		fonteDePoder = "forças naturais";
+		
 		addAquesFisicos(ItemPadrao.Soco());
 		
 		addBonus(BonusPadrao.ArmaduraLeve());
@@ -566,9 +609,9 @@ public class Class extends Raca {
 	public void Urso() {
 
 		nomeDaClasse = ClassConstantes.URSO;
-
 		hp = super.getHp() + DadosConstantes.D8*2 + getConMod();
 		Nmagias = 2;
+		fonteDePoder = "Manobras";
 		
 		setCon(getCon() + 4);
 		setStr(getStr() + 2);
@@ -583,9 +626,9 @@ public class Class extends Raca {
 	public void jaguar() {
 
 		nomeDaClasse = ClassConstantes.JAGUAR;
-
 		hp = super.getHp() + DadosConstantes.D8 + getConMod();
 		Nmagias = 2;
+		fonteDePoder = "Manobras";
 		
 		setCon(getDex() + 4);
 		setStr(getStr() + 4);
@@ -600,9 +643,9 @@ public class Class extends Raca {
 	public void coelho() {
 
 		nomeDaClasse = ClassConstantes.COELHO;
-
 		hp = super.getHp() + DadosConstantes.D4 + getConMod();
 		Nmagias = 2;
+		fonteDePoder = "Manobras";
 		
 		setCon(getDex() + 4);
 		

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 import contantes.AtributoConstantes;
@@ -23,12 +24,16 @@ import model.Dado;
 import model.DeBuff;
 import model.DeBuffPadrao;
 import model.Item;
+import model.ItemPadrao;
 import model.Magia;
+import model.MagiaPadrao;
 import model.Skill;
 import model.SkillPadrao;
 import uteis.Uteis;
 
 public class ControladorLuta {
+
+	private static final String FUGIR = "Fugir";
 
 	private static final String MAGIA_PASSIVA = "magiaPassiva";
 
@@ -50,6 +55,8 @@ public class ControladorLuta {
 	private static Map<String, Criatura> FormasHumanas = new HashMap<>();
 	private List<Criatura> criaturas;
 	private List<Criatura> criaturasMortas = new ArrayList<>();
+	private List<Criatura> fugiram = new ArrayList<>();
+	private List<Item> chao = new ArrayList<>();
 	private int ativo;
 	private int jogavel;
 	private Criatura passivo;
@@ -63,9 +70,14 @@ public class ControladorLuta {
 	int turnos;
 	int dadoDeAtaque;
 
-	public void luta(List<Criatura> criaturaLista) {
+	public List<Criatura> luta(List<Criatura> criaturaLista, List<Item> chao, List<Criatura> fugiram,
+			List<Criatura> criaturasMortas) {
 
 		this.criaturas = criaturaLista;
+		this.fugiram = fugiram;
+		this.criaturasMortas = criaturasMortas;
+		this.chao = chao;
+
 		boolean batalha = true;
 
 		System.out.println("Iniciativas: \n");
@@ -112,7 +124,25 @@ public class ControladorLuta {
 
 				erroCritico0 = false;
 
-				String acaoNome = selecionador20();
+				if (!iSflechasGemeas(criatura)) {
+
+					acaoNome = selecionador20();
+
+				} else {
+
+					acao = ITEM2;
+
+				}
+
+				if (FUGIR.equals(acao)) {
+
+					criatura.setEmFuga(true);
+
+					passivo = criatura;
+
+					fugir();
+
+				}
 
 				if (SKILL.equals(acao)) {
 
@@ -132,7 +162,13 @@ public class ControladorLuta {
 
 					palmasFuriosas(criatura);
 
-					acaoNome = selecionador20();
+					flechasGemeas(criatura);
+
+					if (!iSflechasGemeas(criatura)) {
+
+						acaoNome = selecionador20();
+
+					}
 
 				}
 
@@ -142,7 +178,15 @@ public class ControladorLuta {
 
 				} else if (ITEM2.equals(acao)) {
 
-					item = criatura.getItens().get(acaoNome);
+					if (iSflechasGemeas(criatura)) {
+
+						item = ItemPadrao.ArcoDeJhin();
+
+					} else {
+
+						item = criatura.getItens().get(acaoNome);
+
+					}
 
 				} else if (MAGIA2.equals(acao)) {
 
@@ -330,7 +374,7 @@ public class ControladorLuta {
 							}
 
 						}
-						
+
 					}
 
 				} else if (acao.equals(MAGIA2) && disparavel) {
@@ -383,7 +427,7 @@ public class ControladorLuta {
 
 					}
 
-				} else if (acao.equals(ITEM2) && critical || acao.equals(ATAQUE)) {
+				} else if (acao.equals(ITEM2) || acao.equals(ATAQUE)) {
 
 					System.out.println("Vai usarem quem?\n");
 
@@ -409,6 +453,90 @@ public class ControladorLuta {
 							System.out.println(criatura.getNome() + " você acertou um CRÍTICO !!!!");
 
 							dano = dano + item.dadoDano();
+						}
+
+						if (criatura.getNomeDaClasse() == ClassConstantes.PATRULHEIRO && criatura.getNmagias() >= 0) {
+
+							System.out.println(
+									"Você quer usar uma de suas " + criatura.getNmagias() + " flechas mágica ?\n");
+
+							int lp = 3;
+
+							System.out.println("1 Não");
+							System.out.println("2 " + MagiaPadrao.FlechaDePorior().getNome());
+							System.out.println("3 " + MagiaPadrao.FlechaDeSkirin().getNome());
+
+							if (criatura.getNmagias() >= 2) {
+
+								System.out.println("4 " + MagiaPadrao.FlechaDeLucios().getNome());
+								lp++;
+
+							}
+
+							int sN = Uteis.escaneador(lp);
+
+							switch (sN) {
+
+							case 2:
+
+								magia = MagiaPadrao.FlechaDePorior();
+								criatura.setNmagias(criatura.getNmagias() - magia.getEspacoDeMagia());
+
+								break;
+
+							case 3:
+
+								magia = MagiaPadrao.FlechaDeSkirin();
+								criatura.setNmagias(criatura.getNmagias() - magia.getEspacoDeMagia());
+
+								break;
+
+							case 4:
+
+								magia = MagiaPadrao.FlechaDeLucios();
+								criatura.setNmagias(criatura.getNmagias() - magia.getEspacoDeMagia());
+
+								break;
+
+							case 1:
+
+								break;
+
+							}
+						}
+
+						if (criatura.getNomeDaClasse() == ClassConstantes.MONGE && criatura.getNmagias() >= 0) {
+
+							System.out.println("1 Não");
+							System.out.println("2 " + MagiaPadrao.KiBlocking().getNome());
+							System.out.println("3 " + MagiaPadrao.KiStrugle().getNome());
+							int sN = Uteis.escaneador(3);
+
+							System.out.println("Você quer usar o poder de seus " + criatura.getNmagias() + " KI ?\n");
+
+							switch (sN) {
+
+							case 2:
+
+								magia = MagiaPadrao.KiBlocking();
+								criatura.setNmagias(criatura.getNmagias() - magia.getEspacoDeMagia());
+
+								break;
+
+							case 3:
+
+								magia = MagiaPadrao.KiStrugle();
+								criatura.setNmagias(criatura.getNmagias() - magia.getEspacoDeMagia());
+
+								break;
+
+							case 1:
+								break;
+
+							}
+
+							validaDeBuffM();
+
 						}
 
 						if (isSombra(criatura)) {
@@ -446,6 +574,22 @@ public class ControladorLuta {
 
 								dano = dano / 2;
 
+							} else {
+
+								System.out.println("Você deseja usar dos poderes de deus?\n");
+								System.out.println("1 Sim");
+								System.out.println("2 Não");
+								int sN = Uteis.escaneador(2);
+								if (sN == 1) {
+
+									int dano1 = Dado.D10();
+
+									System.out.println(
+											MagiaPadrao.raioDivino().getNome() + " cai do céu dando mais " + dano1);
+
+									dano = dano + dano1;
+
+								}
 							}
 
 						}
@@ -461,7 +605,7 @@ public class ControladorLuta {
 						if (criatura.getNomeDaClasse() == ClassConstantes.BARBARO && criatura.getHp() < 3) {
 
 							System.out.println(
-									"O seu próprio sangue lhe da força, você da mais 2 de dano e se cura em 1\n");
+									"O seu próprio sangue lhe da força, " + "você da mais 2 de dano e se cura em 1\n");
 							dano = dano + 2;
 							criatura.vidaGanha(1);
 
@@ -483,8 +627,8 @@ public class ControladorLuta {
 
 							}
 
-							System.out.println(
-									"Aqueles sobre suas asas divias não serão atingidos\n\nVocê só pode atingir o anjo:");
+							System.out.println("Aqueles sobre suas asas divias não serão atingidos\n"
+									+ "\nVocê só pode atingir o anjo:");
 
 							for (int i = 0; i < respeitadores.size(); i++) {
 
@@ -500,11 +644,11 @@ public class ControladorLuta {
 
 						passivo.danoRecebido(dano);
 
-						if (criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) && nDeTurnos == 0) {
+						if (criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) && nDeTurnos == 1) {
 
 							nDeTurnos = 2;
 
-						} else if (criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) && nDeTurnos == 1) {
+						} else if (criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) && nDeTurnos == 2) {
 
 							nDeTurnos = 3;
 
@@ -520,9 +664,9 @@ public class ControladorLuta {
 
 				}
 
-				if (!(criatura.getHp() <= 0)) {
+				if ((criatura.getHp() >= 0)) {
 
-					System.out.println("vida de " + passivo.getNome() + " = " + passivo.getHp() + "\n");
+					System.out.println("vida de " + passivo.getNome() + " = " + passivo.getHp());
 
 				}
 
@@ -617,10 +761,22 @@ public class ControladorLuta {
 
 				}
 
+				for (Criatura criatura : fugiram) {
+
+					System.out.println(criatura.getNome() + " fugio\n");
+
+				}
+
+				Loot();
+
 				batalha = false;
+
+				return criaturas;
 			}
 
 		}
+
+		return null;
 
 	}
 
@@ -885,7 +1041,7 @@ public class ControladorLuta {
 
 	private String selecionador20() {
 
-		int escolhido;
+		int escolhido = 0;
 
 		String acaoEscolhida;
 
@@ -893,20 +1049,24 @@ public class ControladorLuta {
 
 		System.out.println("\nEscolha sua " + (turnos + 1) + " ação:");
 
-		if (criatura.getAtaquesFisicos() != null) {
+		if (criatura.getAtaquesFisicos() != null && ((!SKILL.equals(acao) && (criatura.getItens() != null && turnos < 1)
+				|| (!criatura.getNomeDaClasse().equals(ClassConstantes.PATRULHEIRO))))) {
 
 			acoes.add(ATAQUE);
 
 		}
 
-		if (criatura.getItens() != null && turnos < 1 || criatura.getNomeDaClasse().equals(ClassConstantes.GUERREIRO)) {
+		if (criatura.getItens() != null && turnos < 1 || criatura.getNomeDaClasse().equals(ClassConstantes.GUERREIRO)
+				|| criatura.getNomeDaClasse().equals(ClassConstantes.PATRULHEIRO)) {
 
 			acoes.add(ITEM2);
 
 		}
 
 		if ((criatura.getMagias() != null && magiaUtil() || criatura.getMagiasPassivas() != null && magiaPassivaUtil())
-				&& !criatura.getNomeDaClasse().equals(ClassConstantes.MONGE) && isBlocked(criatura)) {
+				&& (!criatura.getNomeDaClasse().equals(ClassConstantes.MONGE)) && (isBlocked(criatura))
+				&& (!SKILL.equals(acao) && (criatura.getItens() != null && turnos < 1)
+						|| !criatura.getNomeDaClasse().equals(ClassConstantes.PATRULHEIRO))) {
 
 			acoes.add(MAGIA2);
 
@@ -925,13 +1085,23 @@ public class ControladorLuta {
 
 		}
 
+		acoes.add(FUGIR);
+
 		for (int i = 0; i < acoes.size(); i++) {
 
 			System.out.println(i + 1 + " " + acoes.get(i));
 
 		}
 
-		escolhido = Uteis.escaneador(acoes.size());
+		if (criatura.isBot()) {
+
+			escolhido = Uteis.escolhaBot(acoes.size());
+
+		} else {
+
+			escolhido = Uteis.escaneador(acoes.size());
+
+		}
 
 		escolhido--;
 
@@ -947,6 +1117,12 @@ public class ControladorLuta {
 
 		switch (escolhido) {
 
+		case FUGIR:
+
+			acao = FUGIR;
+
+			return FUGIR;
+
 		case ATAQUE:
 			return escolhiAtaque();
 
@@ -955,7 +1131,7 @@ public class ControladorLuta {
 
 		case MAGIA2:
 
-			if (!criatura.getMagiasPassivas().isEmpty()) {
+			if (!criatura.getMagiasPassivas().isEmpty() && !criatura.getMagias().isEmpty()) {
 
 				System.out.println("1 Magia de ataque\n");
 				System.out.println("2 Magia Passiva");
@@ -972,7 +1148,12 @@ public class ControladorLuta {
 
 				}
 
+			} else if (!criatura.getMagiasPassivas().isEmpty() && criatura.getMagias().isEmpty()) {
+
+				return escolhiMagiaPassiva();
+
 			}
+
 			return escolhiMagia();
 
 		case SKILL:
@@ -991,6 +1172,21 @@ public class ControladorLuta {
 		for (Map.Entry<String, E> nomes : map.entrySet()) {
 
 			System.out.println(i + " " + nomes.getKey());
+
+			i++;
+		}
+
+	}
+
+	private void mostraMagias() {
+
+		System.out.println("Você tem " + criatura.getNmagias() + " de " + criatura.getFonteDePoder() + "\n");
+
+		int i = 1;
+
+		for (Entry<String, Magia> magia : criatura.getMagias().entrySet()) {
+
+			System.out.println(i + " " + magia.getValue().getNome() + "\t\t" + magia.getValue().getEspacoDeMagia());
 
 			i++;
 		}
@@ -1052,32 +1248,58 @@ public class ControladorLuta {
 
 		if (ativo != null && ativo) {
 
-			criatura.setAc(criatura.getAc() + skill.getBonusAc());
-			criatura.setHp(criatura.getHp() + skill.getBonusVida());
+			if (skill.getBonusAc() != 0) {
+
+				criatura.setAc(criatura.getAc() + skill.getBonusAc());
+
+				System.out.println("Você ganha " + skill.getBonusAc() + " de armadura");
+
+			}
+
+			if (skill.getBonusVida() != 0) {
+
+				criatura.setHp(criatura.getHp() + skill.getBonusVida());
+
+				System.out.println("Você ganha " + skill.getBonusVida() + " de vida");
+
+			}
 
 			if (AtributoConstantes.STR.equals(skill.getAtributo())) {
 
 				criatura.setStr(criatura.getStr() + skill.getBonusAtributo());
 
+				System.out.println("Você ganha " + skill.getBonusAtributo() + " de força");
+
 			} else if (AtributoConstantes.DEX.equals(skill.getAtributo())) {
 
 				criatura.setDex(criatura.getDex() + skill.getBonusAtributo());
+
+				System.out.println("Você ganha " + skill.getBonusAtributo() + " de Dex");
 
 			} else if (AtributoConstantes.CON.equals(skill.getAtributo())) {
 
 				criatura.setCon(criatura.getCon() + skill.getBonusAtributo());
 
+				System.out.println("Você ganha " + skill.getBonusAtributo() + " de Con");
+
 			} else if (AtributoConstantes.CHA.equals(skill.getAtributo())) {
 
 				criatura.setCha(criatura.getCha() + skill.getBonusAtributo());
+
+				System.out.println("Você ganha " + skill.getBonusAtributo() + " de Cha");
 
 			} else if (AtributoConstantes.WIS.equals(skill.getAtributo())) {
 
 				criatura.setWis(criatura.getWis() + skill.getBonusAtributo());
 
-			} else if (AtributoConstantes.CON.equals(skill.getAtributo())) {
+				System.out.println("Você ganha " + skill.getBonusAtributo() + " de Wis");
+
+			} else if (AtributoConstantes.INT.equals(skill.getAtributo())) {
 
 				criatura.setInte(criatura.getInte() + skill.getBonusAtributo());
+
+				System.out.println("Você ganha " + skill.getBonusAtributo() + " de Int");
+
 			}
 		}
 		return criatura;
@@ -1090,8 +1312,21 @@ public class ControladorLuta {
 
 		if (ativoM != null && ativoM) {
 
-			criatura.setAc(criatura.getAc() + magia.getBonusMAC());
-			criatura.setHp(criatura.getHp() + magia.getBonusMHP());
+			if (magia.getBonusMAC() != 0) {
+
+				criatura.setAc(criatura.getAc() + magia.getBonusMAC());
+
+				System.out.println("Você ganha " + magia.getBonusMAC() + " de armadura");
+
+			}
+
+			if (magia.getBonusMHP() != 0) {
+
+				criatura.setHp(criatura.getAc() + magia.getBonusMHP());
+
+				System.out.println("Você ganha " + magia.getBonusMHP() + " de Vida");
+
+			}
 
 		}
 
@@ -1173,6 +1408,9 @@ public class ControladorLuta {
 				criatura.setDesvantagem(DesvantagemC);
 
 			}
+
+			System.out.println("Buff " + skill.getNome() + " termina");
+
 		}
 
 		return criatura;
@@ -1186,6 +1424,8 @@ public class ControladorLuta {
 
 			criatura.setAc(criatura.getAc() - magia.getBonusMAC());
 			criatura.setHp(criatura.getHp() - magia.getBonusMHP());
+
+			System.out.println("Magia " + magia.getNome() + " termina");
 
 		}
 
@@ -1278,7 +1518,7 @@ public class ControladorLuta {
 
 	private int escaneadorIni(int max) {
 
-		int ini = Uteis.escaneador(max);
+		ini = Uteis.escaneador(max);
 
 		ini--;
 
@@ -1304,9 +1544,17 @@ public class ControladorLuta {
 		int escolhido;
 
 		mostraMap(criatura.getAtaquesFisicos());
+		
+		if(criatura.isBot()) {
+			
+		escolhido = Uteis.escolhaBot(criatura.getAtaquesFisicos().size());
+			
+		} else {
 
 		escolhido = Uteis.escaneador(criatura.getAtaquesFisicos().size());
 
+		}
+		
 		acao = ATAQUE;
 
 		return procuraMap(criatura.getAtaquesFisicos(), escolhido);
@@ -1322,7 +1570,15 @@ public class ControladorLuta {
 
 			mostraMap(criatura.getSkills());
 
-			escolhido = Uteis.escaneador(criatura.getSkills().size());
+			if(criatura.isBot()) {
+				
+				escolhido = Uteis.escolhaBot(criatura.getSkills().size());
+					
+				} else {
+
+				escolhido = Uteis.escaneador(criatura.getSkills().size());
+
+				}
 
 			acao = SKILL;
 
@@ -1346,7 +1602,8 @@ public class ControladorLuta {
 	private String escolhiMagia() {
 
 		int escolhido;
-		mostraMap(criatura.getMagias());
+
+		mostraMagias();
 
 		escolhido = Uteis.escaneador(criatura.getMagias().size());
 
@@ -1377,9 +1634,9 @@ public class ControladorLuta {
 
 		}
 
-		System.out.println(magiaNome + " indisponivel:(" + "\n" + "tente outra coisa");
+		System.out.println(magiaNome + " indisponivel:(" + "\n" + "Tente outra coisa\n");
 
-		return null;
+		return escolhiMagia();
 	}
 
 	private String escolhiMagiaPassiva() {
@@ -1404,7 +1661,7 @@ public class ControladorLuta {
 
 		System.out.println(magiaNome + " indisponivel:(" + "\n" + "tente outra coisa");
 
-		return null;
+		return escolhiMagiaPassiva();
 	}
 
 	private List<Criatura> morte() {
@@ -1414,6 +1671,14 @@ public class ControladorLuta {
 			if (criaturas.get(i).getHp() <= 0) {
 
 				criaturasMortas.add(criaturas.get(i));
+
+				for (Map.Entry<String, Item> Item : criaturas.get(i).getItens().entrySet()) {
+
+					chao.add(item);
+
+					criaturas.get(i).getItens().remove(Item);
+
+				}
 
 				criaturas.remove(i);
 
@@ -1822,7 +2087,7 @@ public class ControladorLuta {
 
 			System.out.print("\nVocê teve um erro crítico ");
 
-			if (ATAQUE.equals(acao)) {
+			if (ATAQUE.equals(acao) && ITEM2.equals(acao) && item.isImperdivel()) {
 
 				problema = 1;
 
@@ -1873,6 +2138,8 @@ public class ControladorLuta {
 				Map<String, Item> ItensC = criatura.getItens();
 
 				ItensC.remove(item.getNome());
+
+				chao.add(item);
 
 				criatura.setItens(ItensC);
 
@@ -2080,6 +2347,33 @@ public class ControladorLuta {
 
 			}
 		}
+	}
+
+	private void flechasGemeas(Criatura criatura) {
+
+		if (iSflechasGemeas(criatura)) {
+
+			nDeTurnos++;
+
+			acao = ITEM2;
+
+		}
+	}
+
+	private boolean iSflechasGemeas(Criatura criatura) {
+
+		for (Skill skil : criatura.getBuffs()) {
+
+			if (skil.getNome().equals(SkillPadrao.flechasGemias().getNome())) {
+
+				return true;
+
+			}
+
+		}
+
+		return false;
+
 	}
 
 	private void palmasFuriosas(Criatura criatura) {
@@ -2338,4 +2632,85 @@ public class ControladorLuta {
 
 		return tR;
 	}
+
+	private List<Criatura> fugir() {
+
+		for (int i = 0; i < criaturas.size(); i++) {
+
+			if (criatura.isEmFuga()) {
+
+				fugiram.add(criaturas.get(i));
+
+				criaturas.remove(i);
+
+			}
+
+		}
+
+		return criaturas;
+
+	}
+
+	private List<Criatura> Loot() {
+
+		System.out.println("É hora de aproveitar os prêmios que vem com a vitória\n");
+
+		while (criaturas.size() != 0) {
+
+			for (int j = 0; j < criaturas.size(); j++) {
+
+				System.out.println(criaturas.get(j).getNome() + " pegue um item");
+
+				System.out.println("1 Não quero nada");
+
+				for (int i = 0; i < chao.size(); i++) {
+
+					System.out.println((i + 2) + " " + item.getNome());
+
+				}
+
+				int escolhido = Uteis.escaneador(chao.size() + 1) - 1;
+
+				if (escolhido == 0) {
+
+					criaturas.remove(criaturas.get(j));
+
+				} else {
+
+					criaturas.get(j).getItens().put(chao.get(escolhido - 1).getNome(), chao.get(escolhido - 1));
+
+					System.out.println("Você pega uma " + chao.get(escolhido - 1).getNome());
+
+					chao.remove(escolhido - 1);
+
+				}
+
+				if (j < criaturas.size() - 1) {
+
+					j++;
+
+				} else {
+
+					j = 0;
+				}
+
+			}
+
+		}
+
+		return criaturas;
+
+	}
+
+	private List<Criatura> criaturasVivas() {
+
+		for (int i = 0; i < fugiram.size(); i++) {
+
+			criaturas.add(fugiram.get(i));
+
+		}
+
+		return criaturas;
+	}
+
 }

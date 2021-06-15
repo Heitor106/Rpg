@@ -38,6 +38,20 @@ public class MagiaPadrao {
 
 	}
 	
+	public static Magia Meditação() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Meditação revitalizante");
+		magia.setValorDeDado("1");
+		magia.setnDdos(1);
+		magia.setCura(true);
+		magia.setEspacoDeMagia(1);
+		magia.setDisparavel(false);
+		return magia;
+
+	}
+	
 	public static Magia CurarFerimentos() {
 
 		Magia magia = new Magia();
@@ -105,6 +119,19 @@ public class MagiaPadrao {
 		return magia;
 
 	}
+	
+	public static Magia	CapusInvisivel() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Capus Invisivel");
+		magia.setBonusMAC(3);
+		magia.setTime(2);
+		magia.setEspacoDeMagia(1);
+		magia.setDisparavel(false);
+		return magia;
+
+	}
 
 	public static Magia sopro() {
 
@@ -125,7 +152,7 @@ public class MagiaPadrao {
 
 		Magia magia = new Magia();
 
-		magia.setNome("Energia Pura");
+		magia.setNome("Energia pura  ");
 		magia.setValorDeDado(DadosConstantes.D4N);
 		magia.setnDdos(2);
 		magia.setEspacoDeMagia(3);
@@ -191,6 +218,74 @@ public class MagiaPadrao {
 		magia.setDisparavel(false);
 		magia.setTipoDeDano(ItensConstates.DANO_M);
 		magia.setDebuff(DeBuffPadrao.Veneno());
+		return magia;
+
+	}
+	
+	public static Magia ShurikenCortante() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Shurikens Cortantes");
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.Veneno());
+		magia.setAlvosN(2);
+
+		return magia;
+
+	}
+	
+	public static Magia FlechaDeSkirin() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Flecha venenosa de Skirin");
+		magia.setValorDeDado(DadosConstantes.D6N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.DEX);
+		magia.setDisparavel(false);
+		magia.setTipoDeDano(ItensConstates.DANO_M);
+		magia.setDebuff(DeBuffPadrao.Veneno());
+		return magia;
+
+	}
+	
+	public static Magia FlechaDeLucios() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Flecha atordoante de Lucios");
+	
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(2);
+		magia.setCD(AtributoConstantes.WIS);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_F);
+		magia.setDebuff(DeBuffPadrao.stun());
+		return magia;
+
+	}
+	
+	public static Magia FlechaDePorior() {
+
+		Magia magia = new Magia();
+
+		magia.setNome("Flecha atordoante de Porior");
+	
+		magia.setValorDeDado(DadosConstantes.D4N);
+		magia.setnDdos(1);
+		magia.setEspacoDeMagia(1);
+		magia.setCD(AtributoConstantes.WIS);
+		magia.setDisparavel(true);
+		magia.setTipoDeDano(ItensConstates.DANO_F);
+		magia.setDebuff(DeBuffPadrao.stun());
 		return magia;
 
 	}

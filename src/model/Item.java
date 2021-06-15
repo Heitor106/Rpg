@@ -15,7 +15,16 @@ public class Item {
 	private String tipoItem;
 	private int NdeDados = 1;
 	private DeBuff debuff;
-	
+	private boolean Imperdivel= false;
+		
+	public boolean isImperdivel() {
+		return Imperdivel;
+	}
+
+	public void setImperdivel(boolean imperdivel) {
+		Imperdivel = imperdivel;
+	}
+
 	public DeBuff getDebuff() {
 		return debuff;
 	}
