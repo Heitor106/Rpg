@@ -21,6 +21,20 @@ public class SkillPadrao {
 
 	}
 	
+	public static Skill flechasGemias() {
+
+		 skill = new Skill();
+		 
+		 skill.setTime(1);
+		 skill.setNome("Flechas Gêmeas");
+		 skill.setBonusDano(1);
+		 skill.setTiposkill(ItensConstates.DANO_F);
+		 skill.setEspacoDeSkill(2);
+		 
+		 return skill;
+
+	}
+	
 	public static Skill palmaFuriosa() {
 
 		 skill = new Skill();

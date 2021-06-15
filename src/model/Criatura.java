@@ -21,9 +21,25 @@ public class Criatura extends Class implements Comparable<Criatura> {
 	private boolean MarcaSolar = false;
 	private boolean desvantagem = false;
 	private boolean stunado = false;
-	
+	private boolean EmFuga = false;
+	private boolean bot = false;
 	private int hp = super.getHp();
 	
+	public boolean isBot() {
+		return bot;
+	}
+
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
+
+	public boolean isEmFuga() {
+		return EmFuga;
+	}
+
+	public void setEmFuga(boolean emFuga) {
+		EmFuga = emFuga;
+	}
 
 	public Criatura(Criatura criatura) {
 		this(criatura.getNome(),criatura.getNomeRaca(), "", "", criatura.getNomeDaClasse(),criatura.isAmigo());

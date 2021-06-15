@@ -3,6 +3,7 @@ package contantes;
 public class BonusConstantes {
 
 	public static final int BONUS =2;	
+	public static final String FLECHAS_GEMEAS="Flechas Gêmeas";
 	public static final String ARCANA="Arcana";
 	public static final String RFORCA="Resistencia de força";
 	public static final String RDEX="Resistencia de dextreza";

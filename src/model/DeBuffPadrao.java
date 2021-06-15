@@ -45,6 +45,18 @@ public class DeBuffPadrao {
 
 		return debuff;
 	}
+	
+	public static DeBuff explosao() {
+
+		debuff = new DeBuff();
+
+		debuff.setNome("Explosão de Porior");
+		debuff.setDanoOnHit(3);
+		debuff.setTime(1);
+		debuff.setStun(true);
+
+		return debuff;
+	}
 
 	public static DeBuff stun() {
 

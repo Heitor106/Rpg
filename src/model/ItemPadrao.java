@@ -248,6 +248,18 @@ public class ItemPadrao {
 		return item;
 	}
 	
+	public static Item ArmaduraDeCarapaca() {
+		
+		item=new Item();
+		
+		item.setNome("Armadura de Carapaça");
+		item.setPreco(30);
+		item.setAc(14);
+		item.setTipoItem(ItensConstates.ARMADURAM);
+		
+		return item;
+	}
+	
 	public static Item Saltitante() {
 		
 		item=new Item();
@@ -350,6 +362,23 @@ public class ItemPadrao {
 		item.setSlot(1);
 		item.setAtributo(AtributoConstantes.DEX);
 		item.setMao(ItensConstates.MAO1);
+		item.setTipoItem(ItensConstates.ARMAM);
+		
+		return item;
+
+	}
+	
+	public static Item ArcoDeJhin() {
+		
+		item=new Item();
+		
+		item.setNome("Arco Grande");
+		item.setDadoDeDano(DadosConstantes.D6N);
+		item.setTipoDano(ItensConstates.DANO_F);
+		item.setPreco(0);
+		item.setSlot(1);
+		item.setAtributo(AtributoConstantes.DEX);
+		item.setMao(ItensConstates.MAO2);
 		item.setTipoItem(ItensConstates.ARMAM);
 		
 		return item;

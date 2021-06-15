@@ -16,7 +16,7 @@ public class Skill {
 	private int bonusAtributo;
 	private int bonusAc;
 	private String tiposkill;
-	private boolean alvosMultiplos;
+	private boolean alvosMultiplos=false;
 	
 	public boolean isAlvosMultiplos() {
 		return alvosMultiplos;
